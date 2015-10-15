@@ -1,0 +1,40 @@
+body {
+	font-size: 10pt;
+}
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+	margin: 0pt;
+	padding-top: 0.4em;	
+}
+h1 {
+	font-size: 125%;
+	text-indent: 0em;
+	margin: 0pt;
+}
+
+h2 {
+	font-size: 120%;
+	text-indent: 1em;
+}
+h3 {
+	font-size: 115%;
+	text-indent: 2em;
+}
+h4 {
+	font-size: 110%;
+	text-indent: 0em;
+}
+h5 {
+	font-size: 105%;
+	text-indent: 0em;
+}
+h6 {
+	font-size: 100%;
+	text-indent: 0em;
+}
+/* lists */
+ul {
+	padding-left: 1em;
+	margin: 0em 0em 0em 3em;
+	padding-top: 0.3em;	
+}

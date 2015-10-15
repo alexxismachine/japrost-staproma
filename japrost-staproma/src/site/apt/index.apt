@@ -1,0 +1,16 @@
+  -----
+  StaProMa - Java Programming Studio
+  -----
+  alexxismachine
+  -----
+ 
+StaProMa -  <<St>>atic <<Pro>>ject <<Ma>>nagement
+
+  StaProMa ist ein Tool, welches ein Task-Management auf Basis von 'einfachen' Textdateien erlaubt.
+  Einfache Textdateien als input wurden gewählt, damit man zum Organisieren seiner Aufgaben kein komplexes properitäres Tool installieren muss.
+  Die Textdateien können unabhängig von StaProMa editiert werden und danach wieder durch StaProMa verarbeitet werden. 
+  
+  StaProMa verarbeitet die Textdateien dann in unterschiedliche Ausgabeformate.
+  Die {{{./staproma-core/index.html}Basis-Implementierung}} orientiert sich an GTD und erzeugt html-Dateien.
+	
+	

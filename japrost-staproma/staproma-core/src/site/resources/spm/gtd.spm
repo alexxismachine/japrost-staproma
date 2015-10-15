@@ -1,0 +1,43 @@
+' this is an example file ot things to do
+' starts a comment
+' (!) Current (:) Waiting (@) Scheduled (#) Future (?) Someday (/) Done
+* (!) do now!
+* (:) waiting for Joe
+* (@) 2034-04-01 retire
+* (#) Not now
+* (?) Maybe / Someday
+* (/) this is already done
+# Weitere Features
+* (#) Kommentare
+** Kommentar ist nicht Teil des Contents, gehört aber zur Aufgabe!
+** Welches Kommentar-Zeichen
+*** Mal welche in Dateien einbauen
+*** Verwendete Zeichen für Zeilenanang: * # 
+*** Typische Zeichen: # // ; -- REM ' ! = 
+** Single-Line 
+*** Typiche Ketten /* */ (* *) <!-- --> {- -} 
+** Multiline 
+* (#) aktuell gibt es immer eine Ausgabe von Kapitlen bei current, auch wenn es keinen Task gibt
+* (#) Listener auf file changes
+* (#) Modular auf unterschiedlichsten Architekturen
+** Standalone 
+** SpringEE 
+** JavaEE 
+** JSF
+** AngularJs
+** JPA
+** QueryDSL
+** ...
+* (#) Block-Auszeichnungen
+** Here-Dokumente (Start und Ende jeweils am Zeilenanfang)
+*** '<< EOL' startet, 'EOL' endet
+*** '<<' startet, '>>' endet
+*** '<<=' für monospaced
+* (#) Inline-Auszeichnungen
+* (#) Tabellen (oh Scheiße!)
+* (#) Unterscheiden zwischen (#) und (?)
+** (#) Zunkunft (Future)
+** (?) Vielleicht (Maybe)
+* (#) Geparkte (Items, die in Zukunft items werden)
+** z.B. für regelmäßige Aufgaben (s. Garten Aktionen)
+** (-) Kommt irgendwann wieder

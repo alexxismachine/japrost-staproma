@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>japrost-java-parent</artifactId>
+		<groupId>de.japrost</groupId>
+		<version>1</version>
+	</parent>
+
+	<groupId>de.japrost.staproma</groupId>
+	<artifactId>staproma</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Static Project Management</name>
+	<description>Manage your work with simple text files</description>
+	<url>${japrostProjectUrl}java/staproma</url>
+
+	<properties>
+		<!-- site -->
+		<japrost.site.path>java/staproma</japrost.site.path>
+		<japrost.site.locales>de</japrost.site.locales>
+		<!-- qa -->
+		<japrost.qa.version>1</japrost.qa.version>
+	</properties>
+
+	<modules>
+		<module>staproma-core</module>
+	</modules>
+
+	<dependencies>
+		<!-- TEST -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.agilejava.docbkx</groupId>
+				<artifactId>docbkx-maven-plugin</artifactId>
+				<version>2.0.13</version>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.docbook</groupId>
+						<artifactId>docbook-xml</artifactId>
+						<version>5.0-all</version>
+						<classifier>resources</classifier>
+						<type>zip</type>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate-xhtml</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<!-- TODO  have independent resources for qa?-->
+						<groupId>de.japrost</groupId>
+						<artifactId>japrost-java-parent</artifactId>
+						<version>${japrost.qa.version}</version>
+						<classifier>qa-resources</classifier>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- this is where all the stuff goes to -->
+	<distributionManagement>
+		<site>
+			<id>JaProStDistributionInternal</id>
+			<!-- remote site is staged<url>sftp://ssh.strato.de/japrost/</url> -->
+			<url>file:/srv/sites/japrost/${japrost.site.path}</url>
+		</site>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>${japrost.distribution.releases.id}</id>
+			<name>Releases</name>
+			<url>${japrost.distribution.releases.url}</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>${japrost.distribution.snapshots.id}</id>
+			<name>Snapshots</name>
+			<url>${japrost.distribution.snapshots.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<!-- this is where all the stuff comes from -->
+	<scm>
+		<connection>scm:hg:http://abba:18080/scm/hg/japrost/japrost-staproma</connection>
+		<developerConnection>scm:hg:http://abba:18080/scm/hg/japrost/japrost-staproma</developerConnection>
+	  <tag>HEAD</tag>
+  </scm>
+
+
+
+</project>

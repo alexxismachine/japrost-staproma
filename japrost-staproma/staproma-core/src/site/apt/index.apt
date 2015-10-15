@@ -1,0 +1,32 @@
+  -----
+  StaProMa Core
+  -----
+  alexxismachine
+  -----
+ 
+StaProMa - core
+
+  Dies ist die Basis-Implementierung von StProMa. 
+  Die Formatbeschreibungen sind unter {{{./apidocs/index.html}API}} zu finden.
+  
+    * {{{./apidocs/de/japrost/staproma/spm/SimpleSpmFormat.html}Simple}}
+    
+    * {{{./apidocs/de/japrost/staproma/spm/GtdSpmFormat.html}Gtd}}
+  	
+* Beispiel
+
+    * {{{./spm/01_currentItems.html}Current}}
+
+    * {{{./spm/02_waitingItems.html}Waiting}}
+
+    * {{{./spm/03_scheduledItems.html}Scheduled}}
+
+    * {{{./spm/10_futureItems.html}Future}}
+
+    * {{{./spm/20_somedayItems.html}Someday}}
+
+    * {{{./spm/99_doneItems.html}Done}}
+
+    * {{{./spm/gtd.spm}Eingabe}}-Datei
+
+    
