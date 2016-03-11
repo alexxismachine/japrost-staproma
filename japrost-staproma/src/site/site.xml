@@ -1,47 +1,39 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project
-	xmlns="http://maven.apache.org/DECORATION/1.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
-	name="JaProSt StaProMa">
+  xmlns="http://maven.apache.org/DECORATION/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
+  name="JaProSt StaProMa">
+  <body>
+    <breadcrumbs>
+      <item
+        name="JaProSt"
+        href="${japrost.project.url}/index.html" />
+      <item
+        name="Java"
+        href="${japrost.project.url}/java/index.html" />
+      <item
+        name="StaProMa"
+        href="index.html" />
+    </breadcrumbs>
 
-	<version position="bottom" />
-	<publishDate position="right" />
-
-	<bannerLeft>
-		<name>JaProSt StaProMa</name>
-		<src>images/JaProSt-logo.gif</src>
-		<href>${japrostProjectUrl}</href>
-	</bannerLeft>
-
-	<body>
-		<breadcrumbs>
-			<item
-				name="StaProMa"
-				href="index.html" />
-		</breadcrumbs>
-
-		<menu name="StaProMa">
-			<item
-				name="Übersicht"
-				href="index.html" />
-			<item
-				name="StaProMa Core"
-				href="staproma-core/index.html" />
-		</menu>
-		<menu name="Projekt Aufbau">
-			<item
-				name="Impressum"
-				href="../../imprint.html" />
-		</menu>
-		<menu
-			ref="reports"
-			inherit="bottom" />
-
-	</body>
-	<skin>
-		<groupId>de.japrost</groupId>
-		<artifactId>${japrost.site.skin.artifact}</artifactId>
-		<version>${japrost.site.skin.version}</version>
-	</skin>
+    <menu name="StaProMa">
+      <item
+        name="Übersicht"
+        href="index.html" />
+      <item
+        name="StaProMa Core"
+        href="staproma-core/index.html" />
+    </menu>
+    
+    <menu name="Projekt Aufbau">
+      <item
+        name="Impressum"
+        href="../../imprint.html" />
+    </menu>
+    
+    <menu
+      ref="reports"
+      inherit="bottom" />
+  </body>
 </project>

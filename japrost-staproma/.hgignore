@@ -1,7 +1,0 @@
-
-syntax: regexp
-^staproma-core/target$
-syntax: regexp
-^target$
-syntax: regexp
-^staproma-core/src/test/resources/renderDir/.*html$

@@ -1,40 +1,26 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project
-	xmlns="http://maven.apache.org/DECORATION/1.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
-	name="JaProSt StaProMa Core">
+  xmlns="http://maven.apache.org/DECORATION/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
+  name="JaProSt StaProMa Core">
+  <body>
+    <breadcrumbs>
+      <item
+        name="StaProMa Core"
+        href="index.html" />
+    </breadcrumbs>
 
-	<version position="bottom" />
-	<publishDate position="right" />
-
-	<bannerLeft>
-		<name>JaProSt StaProMa Core</name>
-		<src>images/JaProSt-logo.gif</src>
-		<href>${japrostProjectUrl}</href>
-	</bannerLeft>
-
-	<body>
-		<breadcrumbs>
-			<item
-				name="StaProMa Core"
-				href="index.html" />
-		</breadcrumbs>
-
-		<menu name="StaProMa Core">
-			<item
-				name="Übersicht"
-				href="index.html" />
-		</menu>
-		<menu name="Projekt Aufbau">
-			<item
-				name="Impressum"
-				href="../../../imprint.html" />
-		</menu>
-	</body>
-	<skin>
-		<groupId>de.japrost</groupId>
-		<artifactId>${japrost.site.skin.artifact}</artifactId>
-		<version>${japrost.site.skin.version}</version>
-	</skin>
+    <menu name="StaProMa Core">
+      <item
+        name="Übersicht"
+        href="index.html" />
+    </menu>
+    
+    <menu name="Projekt Aufbau">
+      <item
+        name="Impressum"
+        href="../../../imprint.html" />
+    </menu>
+  </body>
 </project>
