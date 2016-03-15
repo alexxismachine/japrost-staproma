@@ -22,7 +22,6 @@
   <properties>
     <japrost.site.project.path>java/staproma</japrost.site.project.path>
     <japrost.site.locales>de</japrost.site.locales>
-    <japrost.qa.version>1</japrost.qa.version>
   </properties>
 
   <modules>
