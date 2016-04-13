@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.japrost.staproma.TaskState;
+
 /**
  * Test the {@link DefaultSpmFactory}.
  * 
@@ -35,7 +37,7 @@ public class TestDefaultSpmFactory {
 	 */
 	@Test
 	public void constructSimple() {
-		SpmFormat actual = cut.construct("OK");
+		SpmFormat actual = cut.construct(TaskState.CURRENT.name());
 		Assert.assertTrue(actual instanceof SimpleSpmFormat);
 	}
 

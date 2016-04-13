@@ -9,6 +9,8 @@ import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.japrost.staproma.TaskState;
+
 /**
  * Test the {@link DirectoryTask}.
  * 
@@ -47,7 +49,7 @@ public class TestDirectoryTask {
 	 */
 	@Test
 	public void tasksAreInNullState() {
-		cut.setState("ULI");
+		cut.setState(TaskState.CURRENT);
 		assertTrue(cut.isInState(null));
 	}
 
@@ -56,10 +58,10 @@ public class TestDirectoryTask {
 	 */
 	@Test
 	public void everyStateIfNoChildren() {
-		assertTrue(cut.isInState("ULI"));
-		assertTrue(cut.isInState("PIT"));
-		assertTrue(cut.isInState("PON"));
-		assertTrue(cut.isInState("XYZ"));
+		assertTrue(cut.isInState(TaskState.CURRENT));
+		assertTrue(cut.isInState(TaskState.SCHEDULE));
+		assertTrue(cut.isInState(TaskState.DONE));
+		assertTrue(cut.isInState(TaskState.FUTURE));
 	}
 
 	/**
@@ -67,13 +69,13 @@ public class TestDirectoryTask {
 	 */
 	@Test
 	public void ownStateAfterChildState() {
-		expect(taskMock.isInState("ULI")).andReturn(false);
-		expect(taskMock.isInState("ULI")).andReturn(false);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		ems.replayAll();
-		cut.setState("ULI");
+		cut.setState(TaskState.CURRENT);
 		cut.addChild(taskMock);
 		cut.addChild(taskMock);
-		assertTrue(cut.isInState("ULI"));
+		assertTrue(cut.isInState(TaskState.CURRENT));
 		ems.verifyAll();
 	}
 
@@ -82,13 +84,13 @@ public class TestDirectoryTask {
 	 */
 	@Test
 	public void childStateBeforeOwnState() {
-		expect(taskMock.isInState("ULI")).andReturn(false);
-		expect(taskMock.isInState("ULI")).andReturn(true);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(true);
 		ems.replayAll();
-		cut.setState("PETER");
+		cut.setState(TaskState.SCHEDULE);
 		cut.addChild(taskMock);
 		cut.addChild(taskMock);
-		assertTrue(cut.isInState("ULI"));
+		assertTrue(cut.isInState(TaskState.CURRENT));
 		ems.verifyAll();
 	}
 
@@ -97,13 +99,13 @@ public class TestDirectoryTask {
 	 */
 	@Test
 	public void falseAsFallbackState() {
-		expect(taskMock.isInState("PIT")).andReturn(false);
-		expect(taskMock.isInState("PIT")).andReturn(false);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		ems.replayAll();
-		cut.setState("ULI");
+		cut.setState(TaskState.SOMEDAY);
 		cut.addChild(taskMock);
 		cut.addChild(taskMock);
-		assertFalse(cut.isInState("PIT"));
+		assertFalse(cut.isInState(TaskState.CURRENT));
 		ems.verifyAll();
 	}
 }

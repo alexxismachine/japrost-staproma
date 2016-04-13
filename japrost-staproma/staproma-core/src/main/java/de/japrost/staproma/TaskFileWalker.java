@@ -147,21 +147,24 @@ public class TaskFileWalker extends DirectoryWalker<String> {
 					OUT.println("SAME");
 					Task addTo = currentTask.getParent();
 					DirectoryTask task = new DirectoryTask(addTo, relativePath, description);
-					task.setState("FOLDER");
+					//task.setState("FOLDER");
+					//task.setState(TaskState.CURRENT);
 					addTo.addChild(task);
 					currentTask = task;
 				} else if (depth < level) {
 					OUT.println("PARENT");
 					Task addTo = currentTask.getParent().getParent();
 					DirectoryTask task = new DirectoryTask(addTo, relativePath, description);
-					task.setState("FOLDER");
+					//task.setState("FOLDER");
+					//task.setState(TaskState.CURRENT);
 					addTo.addChild(task);
 					currentTask = task;
 				} else { // depth > level
 					OUT.println("SUB");
 					Task addTo = currentTask;
 					DirectoryTask task = new DirectoryTask(addTo, relativePath, description);
-					task.setState("FOLDER");
+					//task.setState("FOLDER");
+					//task.setState(TaskState.CURRENT);
 					addTo.addChild(task);
 					currentTask = task;
 				}

@@ -1,0 +1,20 @@
+  -----
+  StaProMa Renderer
+  -----
+  alexxismachine
+  -----
+ 
+Renderer
+
+  Diese Seite beschreibt, welche ausgaben StaProMa erzeugt.
+
+* StatusTaskHtmlRenderer
+
+  Dieser Renderer erzeugt für einen Status eine html-Datei, in der die Tasks in ihrer alphabetischen Reihenfolge hierarchisch dargestellt werden.
+  Directory-Tasks werden als Link auf das Verzeichnis gerendert.
+  Bei einer entsprechenden Einstellung des Browsers kann man die StaProMa-Dateien aus dem Verzeichnis direkt im Editor öffnen.
+  
+* ScheduledTaskHtmlRenderer
+
+  Dieser Render erzeugt eine nach Beschreibung sortierte Liste aller Tasks die im Status "SCHEDULED" sind. 
+  Beginnt die Beschreibung mit einem Datum im ISO-Format, dann erhält man eine Sortierung nach Datum. 

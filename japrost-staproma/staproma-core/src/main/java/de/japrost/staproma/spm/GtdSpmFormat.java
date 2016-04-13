@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.AnonymousTask;
 import de.japrost.staproma.task.FolderTask;
 import de.japrost.staproma.task.LeafTask;
@@ -180,19 +181,19 @@ public class GtdSpmFormat implements SpmFormat {
 				System.out.println("*> Going for '" + line.substring(2) + "' with '" + stepMatcher.group(1) + "' on "
 						+ currentL);
 				String symbol = stepMatcher.group(1);
-				String state = null;
+				TaskState state = null;
 				if ("!".equals(symbol)) {
-					state = "CURRENT";
+					state = TaskState.CURRENT;
 				} else if ("@".equals(symbol)) {
-					state = "SCHEDULE";
+					state = TaskState.SCHEDULE;
 				} else if ("/".equals(symbol)) {
-					state = "DONE";
+					state = TaskState.DONE;
 				} else if ("?".equals(symbol)) {
-					state = "SOMEDAY";
+					state = TaskState.SOMEDAY;
 				} else if ("#".equals(symbol)) {
-					state = "FUTURE";
+					state = TaskState.FUTURE;
 				} else if (":".equals(symbol)) {
-					state = "WAITING";
+					state = TaskState.WAITING;
 				} else {
 					// match but unknown symbol? Can only happen on changed action pattern!
 					state = null;
@@ -201,7 +202,7 @@ public class GtdSpmFormat implements SpmFormat {
 				if (state == null) {
 					// No symbol found. Should not happen!
 					task = new LeafTask(currentT, line.substring(2));
-					task.setState("CURRENT");
+					task.setState(TaskState.CURRENT);
 				} else {
 					task = new LeafTask(currentT, stepMatcher.group(2));
 					task.setState(state);
@@ -219,7 +220,7 @@ public class GtdSpmFormat implements SpmFormat {
 				Task addTo = currentT;
 				//System.out.println(" * Adding to " + addTo.getDescription());
 				LeafTask task = new LeafTask(currentT, line.substring(2));
-				task.setState("CURRENT");
+				task.setState(TaskState.CURRENT);
 				addTo.addChild(task);
 				contentT = task;
 				continue; // replace with else later on?

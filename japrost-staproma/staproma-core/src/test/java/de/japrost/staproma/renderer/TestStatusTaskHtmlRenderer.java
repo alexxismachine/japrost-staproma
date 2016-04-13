@@ -1,4 +1,4 @@
-package de.japrost.staproma;
+package de.japrost.staproma.renderer;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.japrost.staproma.TaskState;
+import de.japrost.staproma.renderer.StatusTaskHtmlRenderer;
 import de.japrost.staproma.task.DirectoryTask;
 import de.japrost.staproma.task.FolderTask;
 import de.japrost.staproma.task.LeafTask;
@@ -87,7 +89,7 @@ public class TestStatusTaskHtmlRenderer {
 		root.addChild(subTask);
 		Task subSubTask = new LeafTask(root, "subSubTask");
 		subTask.addChild(subSubTask);
-		String status = null;
+		TaskState status = null;
 		cut.render(root, status, writer);
 		Assert.assertEquals("<h1>subTask</h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n", writer.toString());
 	}
@@ -104,7 +106,7 @@ public class TestStatusTaskHtmlRenderer {
 		root.addChild(subTask);
 		Task subSubTask = new LeafTask(root, "subSubTask");
 		subTask.addChild(subSubTask);
-		String status = null;
+		TaskState status = null;
 		cut.render(root, status, writer);
 		Assert.assertEquals("<h1><a href='path'>subTask</a></h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n",
 				writer.toString());
@@ -124,7 +126,7 @@ public class TestStatusTaskHtmlRenderer {
 		subTask.addChild(subSubTask);
 		Task subSubTask2 = new LeafTask(root, "subSubTask2");
 		subTask.addChild(subSubTask2);
-		String status = null;
+		TaskState status = null;
 		cut.render(root, status, writer);
 		Assert.assertEquals(
 				"<h1><a href='path'>subTask</a></h1>\n<ul>\n  <li>subSubTask</li>\n  <li>subSubTask2</li>\n</ul>\n",
@@ -145,7 +147,7 @@ public class TestStatusTaskHtmlRenderer {
 		subTask.addChild(subSubTask);
 		Task subSubTask2 = new LeafTask(root, "subSubTask2");
 		subTask.addChild(subSubTask2);
-		String status = null;
+		TaskState status = null;
 		cut.render(root, status, writer);
 		Assert.assertEquals(
 				"<h1><a href='path'>subTask</a></h1>\n<h2>subSubTask</h2>\n<h2>WEITERES</h2>\n<ul>\n  <li>subSubTask2</li>\n</ul>\n",
@@ -166,7 +168,7 @@ public class TestStatusTaskHtmlRenderer {
 		subTask.addChild(subSubTask);
 		Task subSubTask2 = new FolderTask(root, "subSubTask2");
 		subTask.addChild(subSubTask2);
-		String status = null;
+		TaskState status = null;
 		cut.render(root, status, writer);
 		Assert.assertEquals(
 				"<h1><a href='path'>subTask</a></h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n<h2>subSubTask2</h2>\n",
@@ -182,7 +184,7 @@ public class TestStatusTaskHtmlRenderer {
 	@Test
 	public void renderIgnoresWrongState() throws IOException {
 		root.addChild(new FolderTask(root, "subTask"));
-		String status = "OK";
+		TaskState status = TaskState.SOMEDAY;
 		cut.render(root, status, writer);
 		Assert.assertEquals("", writer.toString());
 	}

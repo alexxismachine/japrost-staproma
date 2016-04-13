@@ -1,5 +1,7 @@
 package de.japrost.staproma;
 
+import static de.japrost.staproma.TaskState.CURRENT;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,6 +15,8 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
+import de.japrost.staproma.renderer.ScheduledTaskHtmlRenderer;
+import de.japrost.staproma.renderer.StatusTaskHtmlRenderer;
 import de.japrost.staproma.task.FolderTask;
 import de.japrost.staproma.task.Task;
 
@@ -72,18 +76,31 @@ public class RenderStaProMa2 {
 	}
 
 	private void doAll() throws IOException {
-		Task root = crawlFiles();
+		Task rootTask = crawlFiles();
 		StatusTaskHtmlRenderer stw = new StatusTaskHtmlRenderer();
-		writeFile(root, stw, "Current", "CURRENT", "01_currentItems.html");
-		writeFile(root, stw, "Waiting", "WAITING", "02_waitingItems.html");
-		writeFile(root, stw, "Scheduled", "SCHEDULE", "03_scheduledItems.html");
-		writeFile(root, stw, "Future", "FUTURE", "10_futureItems.html");
-		writeFile(root, stw, "Someday", "SOMEDAY", "20_somedayItems.html");
-		writeFile(root, stw, "Done", "DONE", "99_doneItems.html");
+		//ScheduledTaskHtmlRenderer scheduledTaskHtmlRenderer = new ScheduledTaskHtmlRenderer(rootTask,)
+		writeFile(rootTask, stw, "Current", TaskState.CURRENT, "01_currentItems.html");
+		writeFile(rootTask, stw, "Waiting", TaskState.WAITING, "02_waitingItems.html");
+		//writeFile(rootTask, stw, "Scheduled", TaskState.SCHEDULE, "03_scheduledItems.html");
+		writeScheduleFile(rootTask, "Scheduled", "03_scheduledItems.html");
+		writeFile(rootTask, stw, "Future", TaskState.FUTURE, "10_futureItems.html");
+		writeFile(rootTask, stw, "Someday", TaskState.SOMEDAY, "20_somedayItems.html");
+		writeFile(rootTask, stw, "Done", TaskState.DONE, "99_doneItems.html");
 		copyStyle();
 	}
 
-	private void writeFile(Task root, StatusTaskHtmlRenderer stw, String title, String status, String fileName)
+	private void writeScheduleFile(Task root, String title, String fileName)
+			throws IOException {
+		StringWriter writer;
+		writer = new StringWriter();
+		writeHead(writer, title);
+		ScheduledTaskHtmlRenderer scheduledTaskHtmlRenderer = new ScheduledTaskHtmlRenderer(root,writer);
+		scheduledTaskHtmlRenderer.render();
+		writeFoot(writer);
+		
+		writeFile(fileName, writer.toString());
+	}
+	private void writeFile(Task root, StatusTaskHtmlRenderer stw, String title, TaskState status, String fileName)
 			throws IOException {
 		StringWriter writer;
 		writer = new StringWriter();

@@ -1,5 +1,7 @@
 package de.japrost.staproma.task;
 
+import de.japrost.staproma.TaskState;
+
 /**
  * Represents a task which is a directory (so not derived form parsing a file).<br>
  * A directory has no state of its own but is in all the states that the containing tasks are.
@@ -34,7 +36,7 @@ public class DirectoryTask extends AbstactTask {
 	 * </p>
 	 */
 	@Override
-	public boolean isInState(String status) {
+	public boolean isInState(TaskState status) {
 		String enter = "-> state " + getDescription();
 		String leave = "<- state " + getDescription() + ": ";
 		System.out.println(enter);

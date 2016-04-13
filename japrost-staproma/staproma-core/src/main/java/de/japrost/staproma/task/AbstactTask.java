@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import de.japrost.staproma.TaskState;
+
 /**
  * This is a simple base implementation of a Task.
  * 
@@ -20,7 +22,7 @@ public abstract class AbstactTask implements Task {
 	/**
 	 * The state of this task.
 	 */
-	protected String state;
+	protected TaskState state;
 	private final String description;
 	private final Task parent;
 	private final List<String> content = new ArrayList<String>();
@@ -45,12 +47,12 @@ public abstract class AbstactTask implements Task {
 	 *            the new state.
 	 */
 	// FIXME make state unmodifiable?
-	public void setState(String state) {
+	public void setState(TaskState state) {
 		this.state = state;
 	}
 
 	@Override
-	public boolean isInState(String status) {
+	public boolean isInState(TaskState status) {
 		//hier nur eine dummy implementierung die true zurück gibt. alle anderen mit eigener!
 		String enter = "-> state " + getDescription() + ": " + state;
 		String leave = "<- state " + getDescription() + ": ";

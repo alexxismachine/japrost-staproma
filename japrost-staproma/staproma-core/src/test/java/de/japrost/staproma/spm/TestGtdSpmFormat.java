@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.AnonymousTask;
 import de.japrost.staproma.task.Task;
 
@@ -156,7 +157,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("(\f) invalid", firstAction.getDescription());
-		assertTrue(firstAction.isInState("CURRENT"));
+		assertTrue(firstAction.isInState(TaskState.CURRENT));
 	}
 
 	/**
@@ -170,7 +171,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("current", firstAction.getDescription());
-		assertTrue(firstAction.isInState("CURRENT"));
+		assertTrue(firstAction.isInState(TaskState.CURRENT));
 	}
 
 	/**
@@ -184,7 +185,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("schedule", firstAction.getDescription());
-		assertTrue(firstAction.isInState("SCHEDULE"));
+		assertTrue(firstAction.isInState(TaskState.SCHEDULE));
 	}
 
 	/**
@@ -198,7 +199,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("done", firstAction.getDescription());
-		assertTrue(firstAction.isInState("DONE"));
+		assertTrue(firstAction.isInState(TaskState.DONE));
 	}
 
 	/**
@@ -212,7 +213,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("someday", firstAction.getDescription());
-		assertTrue(firstAction.isInState("SOMEDAY"));
+		assertTrue(firstAction.isInState(TaskState.SOMEDAY));
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("future", firstAction.getDescription());
-		assertTrue(firstAction.isInState("FUTURE"));
+		assertTrue(firstAction.isInState(TaskState.FUTURE));
 	}
 
 	/**
@@ -240,7 +241,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("waiting", firstAction.getDescription());
-		assertTrue(firstAction.isInState("WAITING"));
+		assertTrue(firstAction.isInState(TaskState.WAITING));
 	}
 
 	/**
@@ -254,7 +255,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("missing (in) action", firstAction.getDescription());
-		assertTrue(firstAction.isInState("CURRENT"));
+		assertTrue(firstAction.isInState(TaskState.CURRENT));
 	}
 
 	/**
@@ -268,7 +269,7 @@ public class TestGtdSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("(+) unknown action", firstAction.getDescription());
-		assertTrue(firstAction.isInState("CURRENT"));
+		assertTrue(firstAction.isInState(TaskState.CURRENT));
 	}
 
 	/**

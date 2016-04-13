@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.AnonymousTask;
 import de.japrost.staproma.task.Task;
 
@@ -28,7 +29,7 @@ public class TestSimpleSpmFormat {
 	 */
 	@Before
 	public void setUp() {
-		cut = new SimpleSpmFormat("ULI");
+		cut = new SimpleSpmFormat(TaskState.CURRENT);
 	}
 
 	/**
@@ -156,7 +157,7 @@ public class TestSimpleSpmFormat {
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("missing (in) action", firstAction.getDescription());
-		assertTrue(firstAction.isInState("ULI"));
+		assertTrue(firstAction.isInState(TaskState.CURRENT));
 	}
 
 	/**

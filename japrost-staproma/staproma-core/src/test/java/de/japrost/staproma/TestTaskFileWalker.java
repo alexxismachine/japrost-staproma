@@ -116,25 +116,25 @@ public class TestTaskFileWalker {
 		//
 		next = iterator.next();
 		assertEquals("FULL-15 withName", next.getDescription());
-		assertTrue(next.isInState("FOLDER"));
+		assertTrue(next.isInState(TaskState.CURRENT));
 		assertEquals(rootTask, next.getParent());
 		assertFalse(next.hasChildren());
 		//
 		next = iterator.next();
 		assertEquals("MINIMAL", next.getDescription());
-		assertTrue(next.isInState("FOLDER"));
+		assertTrue(next.isInState(TaskState.CURRENT));
 		assertEquals(rootTask, next.getParent());
 		assertFalse(next.hasChildren());
 		//
 		next = iterator.next();
 		assertEquals("theName", next.getDescription());
-		assertTrue(next.isInState("FOLDER"));
+		assertTrue(next.isInState(TaskState.CURRENT));
 		assertEquals(rootTask, next.getParent());
 		assertFalse(next.hasChildren());
 		//
 		next = iterator.next();
 		assertEquals("NUMBERDIR-42", next.getDescription());
-		assertTrue(next.isInState("FOLDER"));
+		assertTrue(next.isInState(TaskState.CURRENT));
 		assertEquals(rootTask, next.getParent());
 		assertFalse(next.hasChildren());
 		//

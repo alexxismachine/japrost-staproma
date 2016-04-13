@@ -2,6 +2,8 @@ package de.japrost.staproma.task;
 
 import java.util.Collection;
 
+import de.japrost.staproma.TaskState;
+
 /**
  * <p>
  * A task in the task tree.
@@ -25,15 +27,14 @@ import java.util.Collection;
 // TODO? devide the "contents"-part and the tree-parts into two interfaces.
 public interface Task extends Iterable<Task> {
 	/**
-	 * Do not like the string parameter.<br>
 	 * Tell if the task is in the asked status. A task is in a status if itself or one of the children is in that
-	 * status. If given status is {@code null} must return <code>true</code>.
+	 * status. If given status is {@code null} must return <code>true</code>. 
 	 * 
 	 * @param status
-	 *            the task type
+	 *            the task state
 	 * @return <code>true</code> if the task is in the asked status.
 	 */
-	boolean isInState(String status);
+	boolean isInState(TaskState status);
 
 	/**
 	 * Add a child to the task. (??? Sets the parent of the added task to this???).

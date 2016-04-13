@@ -15,6 +15,8 @@ import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.japrost.staproma.TaskState;
+
 /**
  * Test the {@link AbstactTask}.
  * 
@@ -53,9 +55,9 @@ public class TestAbstactTask {
 	 */
 	@Test
 	public void setState() {
-		assertFalse(cut.isInState("ULI"));
-		cut.setState("ULI");
-		assertTrue(cut.isInState("ULI"));
+		assertFalse(cut.isInState(TaskState.CURRENT));
+		cut.setState(TaskState.CURRENT);
+		assertTrue(cut.isInState(TaskState.CURRENT));
 	}
 
 	/**
@@ -63,7 +65,7 @@ public class TestAbstactTask {
 	 */
 	@Test
 	public void isInFalseStateByDefault() {
-		assertFalse(cut.isInState(""));
+		assertFalse(cut.isInState(TaskState.CURRENT));
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class TestAbstactTask {
 	 */
 	@Test
 	public void tasksAreInNullState() {
-		cut.setState("ULI");
+		cut.setState(TaskState.CURRENT);
 		assertTrue(cut.isInState(null));
 	}
 
@@ -82,9 +84,9 @@ public class TestAbstactTask {
 	public void ownStateBeforeChildState() {
 		// taskMock is not called.
 		ems.replayAll();
-		cut.setState("ULI");
+		cut.setState(TaskState.CURRENT);
 		cut.addChild(taskMock);
-		assertTrue(cut.isInState("ULI"));
+		assertTrue(cut.isInState(TaskState.CURRENT));
 		ems.verifyAll();
 	}
 
@@ -93,13 +95,13 @@ public class TestAbstactTask {
 	 */
 	@Test
 	public void childStateIfNotOwnState() {
-		expect(taskMock.isInState("ULI")).andReturn(false);
-		expect(taskMock.isInState("ULI")).andReturn(true);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
+		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(true);
 		ems.replayAll();
-		cut.setState("PETER");
+		cut.setState(TaskState.SCHEDULE);
 		cut.addChild(taskMock);
 		cut.addChild(taskMock);
-		assertTrue(cut.isInState("ULI"));
+		assertTrue(cut.isInState(TaskState.CURRENT));
 		ems.verifyAll();
 	}
 
@@ -109,7 +111,7 @@ public class TestAbstactTask {
 	@Test
 	public void implementsIterableOnSubTasks() {
 		ems.replayAll();
-		cut.setState("PETER");
+		cut.setState(TaskState.CURRENT);
 		cut.addChild(taskMock);
 		cut.addChild(taskMock);
 		int count = 0;

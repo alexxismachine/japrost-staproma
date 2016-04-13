@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.AnonymousTask;
 import de.japrost.staproma.task.FolderTask;
 import de.japrost.staproma.task.LeafTask;
@@ -16,7 +17,7 @@ import de.japrost.staproma.task.Task;
  * 
  */
 public class SimpleSpmFormat implements SpmFormat {
-	private final String status;
+	private final TaskState status;
 
 	/**
 	 * Create an instance.
@@ -24,7 +25,7 @@ public class SimpleSpmFormat implements SpmFormat {
 	 * @param status
 	 *            the status to assign to leafs.
 	 */
-	public SimpleSpmFormat(String status) {
+	public SimpleSpmFormat(TaskState status) {
 		this.status = status;
 	}
 

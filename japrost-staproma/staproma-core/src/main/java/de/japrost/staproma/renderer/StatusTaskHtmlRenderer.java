@@ -1,8 +1,9 @@
-package de.japrost.staproma;
+package de.japrost.staproma.renderer;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.DirectoryTask;
 import de.japrost.staproma.task.LeafTask;
 import de.japrost.staproma.task.Task;
@@ -26,16 +27,17 @@ public class StatusTaskHtmlRenderer {
 	 * @throws IOException
 	 *             on io failures on the writer.
 	 */
-	public void render(Task root, String status, Writer writer) throws IOException {
+	public void render(Task root, TaskState status, Writer writer) throws IOException {
 		//TODO writer and status as instance variables
 		walkSubTree(root, 0, new RenderState(), status, writer);
 	}
 
-	private void walkSubTree(Task task, int level, RenderState renderState, String status, Writer writer)
+	private void walkSubTree(Task task, int level, RenderState renderState, TaskState status, Writer writer)
 			throws IOException {
 		int myLevel = level + 1;
 		if (task.isInState(status)) {
 			if (level > 0) {
+				// do not print root task
 				printTask(task, level, renderState, writer);
 			}
 			RenderState localRenderState = new RenderState();
