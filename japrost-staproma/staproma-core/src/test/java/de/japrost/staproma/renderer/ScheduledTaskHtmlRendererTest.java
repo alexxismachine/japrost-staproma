@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.AnonymousTask;
+import de.japrost.staproma.task.DirectoryTask;
 import de.japrost.staproma.task.FolderTask;
 import de.japrost.staproma.task.LeafTask;
 import de.jplanets.junit.AssertString;
@@ -21,6 +22,12 @@ import de.jplanets.junit.AssertString;
 public class ScheduledTaskHtmlRendererTest {
 	private ScheduledTaskHtmlRenderer cut;
 
+	private List<String> expecteds;
+	
+	@Before
+	public void setUp() {
+		expecteds = new ArrayList<>();
+	}
 	/**
 	 * Test that constructor fails fast, if null is passed in.
 	 */
@@ -61,17 +68,14 @@ public class ScheduledTaskHtmlRendererTest {
 		// when
 		cut.render();
 		// then
-		List<String> expecteds = new ArrayList<>();
 		expecteds.add("<dl>");
-		expecteds.add("  <dt>2016-01-01</dt>");
-		expecteds.add("  <dd>Do some important stuff</dd>");
-		expecteds.add("");
+		addDtDd("2016-01-01", "Do some important stuff");
 		expecteds.add("</dl>");
 		AssertString.assertLinesEqual(expecteds.toArray(new String[0]), writer.toString().split("\n"));
 	}
 
 	/**
-	 * Test the basic rendering with multiple tasks.
+	 * Test the basic rendering with multiple tasks. Root heading is ignored.
 	 * 
 	 * @throws Exception
 	 *             never
@@ -91,15 +95,7 @@ public class ScheduledTaskHtmlRendererTest {
 		// when
 		cut.render();
 		// then
-		List<String> expecteds = new ArrayList<>();
-		expecteds.add("<dl>");
-		expecteds.add("  <dt>2016-01-01</dt>");
-		expecteds.add("  <dd>Do some important stuff : Some Heading</dd>");
-		expecteds.add("");
-		expecteds.add("  <dt>2016-02-01</dt>");
-		expecteds.add("  <dd>Do more stuff : Some Heading</dd>");
-		expecteds.add("");
-		expecteds.add("</dl>");
+		twoTaskResult();
 		AssertString.assertLinesEqual(expecteds.toArray(new String[0]), writer.toString().split("\n"));
 	}
 
@@ -123,16 +119,7 @@ public class ScheduledTaskHtmlRendererTest {
 		cut = new ScheduledTaskHtmlRenderer(rootTask, writer);
 		// when
 		cut.render();
-		// then
-		List<String> expecteds = new ArrayList<>();
-		expecteds.add("<dl>");
-		expecteds.add("  <dt>2016-01-01</dt>");
-		expecteds.add("  <dd>Do some important stuff : Some Heading</dd>");
-		expecteds.add("");
-		expecteds.add("  <dt>2016-02-01</dt>");
-		expecteds.add("  <dd>Do more stuff : Some Heading</dd>");
-		expecteds.add("");
-		expecteds.add("</dl>");
+		twoTaskResult();
 		AssertString.assertLinesEqual(expecteds.toArray(new String[0]), writer.toString().split("\n"));
 	}
 
@@ -161,15 +148,89 @@ public class ScheduledTaskHtmlRendererTest {
 		// when
 		cut.render();
 		// then
-		List<String> expecteds = new ArrayList<>();
 		expecteds.add("<dl>");
-		expecteds.add("  <dt>2016-01-01</dt>");
-		expecteds.add("  <dd>Do some important stuff : Some Heading</dd>");
-		expecteds.add("");
-		expecteds.add("  <dt>2016-02-01</dt>");
-		expecteds.add("  <dd>Do more stuff : Intermediate : Some Heading</dd>");
-		expecteds.add("");
+		firstTaskResult();
+		addDtDd("2016-02-01", "Do more stuff : Intermediate");
 		expecteds.add("</dl>");
 		AssertString.assertLinesEqual(expecteds.toArray(new String[0]), writer.toString().split("\n"));
 	}
+	/**
+	 * Test create a link for directory tasks.
+	 * 
+	 * @throws Exception
+	 *             never
+	 */
+	@Test
+	public void createLinkForDirectoryTasks() throws Exception {
+		// given
+		StringWriter writer = new StringWriter();
+		FolderTask rootTask = new FolderTask(null, "Some Heading");
+		LeafTask firstTask = new LeafTask(rootTask, "2016-01-01 Do some important stuff");
+		firstTask.setState(TaskState.SCHEDULE);
+		// second on different level
+		DirectoryTask folder = new DirectoryTask(rootTask,"./path", "Intermediate");
+		LeafTask secondTask = new LeafTask(folder, "2016-02-01 Do more stuff");
+		secondTask.setState(TaskState.SCHEDULE);
+		folder.addChild(secondTask);
+		rootTask.addChild(folder);
+		// add first after intermediate
+		rootTask.addChild(firstTask);
+		cut = new ScheduledTaskHtmlRenderer(rootTask, writer);
+		// when
+		cut.render();
+		// then
+		expecteds.add("<dl>");
+		firstTaskResult();
+		addDtDd("2016-02-01", "Do more stuff : <a href='./path'>Intermediate</a>");
+		expecteds.add("</dl>");
+		AssertString.assertLinesEqual(expecteds.toArray(new String[0]), writer.toString().split("\n"));
+	}
+
+	/**
+	 * Test that non scheduled tasks are ignored.
+	 * 
+	 * @throws Exception
+	 *             never
+	 */
+	@Test
+	public void ignoreNonScheduledTasks() throws Exception {
+		// given
+		StringWriter writer = new StringWriter();
+		FolderTask rootTask = new FolderTask(null, "Some Heading");
+		LeafTask firstTask = new LeafTask(rootTask, "2016-01-01 Do some important stuff");
+		firstTask.setState(TaskState.SCHEDULE);
+		rootTask.addChild(firstTask);
+		LeafTask secondTask = new LeafTask(rootTask, "Do more stuff now!");
+		secondTask.setState(TaskState.CURRENT);
+		rootTask.addChild(secondTask);
+		cut = new ScheduledTaskHtmlRenderer(rootTask, writer);
+		// when
+		cut.render();
+		// then
+		expecteds.add("<dl>");
+		firstTaskResult();
+		expecteds.add("</dl>");
+		AssertString.assertLinesEqual(expecteds.toArray(new String[0]), writer.toString().split("\n"));
+	}
+
+	private void twoTaskResult() {
+		expecteds.add("<dl>");
+		firstTaskResult();
+		secondTaskResult();
+		expecteds.add("</dl>");
+	}
+
+	private void firstTaskResult() {
+		addDtDd("2016-01-01", "Do some important stuff");
+	}
+	private void secondTaskResult() {
+		addDtDd("2016-02-01", "Do more stuff");
+	}
+
+	private void addDtDd(String dt, String dd) {
+		expecteds.add("  <dt>"+dt+"</dt>");
+		expecteds.add("  <dd>"+dd+"</dd>");
+		expecteds.add("");
+	}
+
 }

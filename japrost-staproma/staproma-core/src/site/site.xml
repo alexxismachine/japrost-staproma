@@ -15,6 +15,9 @@
       <item
         name="Übersicht"
         href="index.html" />
+      <item
+        name="Renderer"
+        href="render.html" />
     </menu>
     
     <menu name="Projekt Aufbau">

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.japrost.staproma.TaskState;
+import de.japrost.staproma.task.DirectoryTask;
 import de.japrost.staproma.task.LeafTask;
 import de.japrost.staproma.task.Task;
 
@@ -88,8 +89,13 @@ public class ScheduledTaskHtmlRenderer {
 	private String composeParentPath(Task leafTask) {
 		Task parent = leafTask.getParent();
 		String parentString = "";
-		if (parent != null) {
-			parentString = " : " + parent.getDescription();
+		if (parent != null && parent.getParent() != null) {
+			// FIXME create links to directory tasks.
+			if (parent instanceof DirectoryTask) {
+				parentString = " : <a href='" + ((DirectoryTask) parent).getPath() + "'>" + parent.getDescription() + "</a>";
+			} else {
+				parentString = " : " + parent.getDescription();
+			}
 			parentString = parentString + composeParentPath(parent);
 		}
 		return parentString;
