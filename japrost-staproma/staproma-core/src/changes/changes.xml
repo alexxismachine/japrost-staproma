@@ -7,7 +7,10 @@
       version="0.0.3"
       description="pom and reports">
       <action type="new">
-        Renderer for scheduled tasks.
+        Renderer links between pages.
+      </action>
+      <action type="new">
+        Renderer for scheduled tasks and syntetic 'today' task.
       </action>
       <action type="new">
         Use enum for states.

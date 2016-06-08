@@ -12,7 +12,7 @@
 ** Kommentar ist nicht Teil des Contents, gehört aber zur Aufgabe!
 ** Welches Kommentar-Zeichen
 *** Mal welche in Dateien einbauen
-*** Verwendete Zeichen für Zeilenanang: * # 
+*** Verwendete Zeichen für Zeilenanfang: * # 
 *** Typische Zeichen: # // ; -- REM ' ! = 
 ** Single-Line 
 *** Typiche Ketten /* */ (* *) <!-- --> {- -} 

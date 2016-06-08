@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.StringWriter;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
@@ -18,6 +19,7 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import de.japrost.staproma.renderer.ScheduledTaskHtmlRenderer;
 import de.japrost.staproma.renderer.StatusTaskHtmlRenderer;
 import de.japrost.staproma.task.FolderTask;
+import de.japrost.staproma.task.LeafTask;
 import de.japrost.staproma.task.Task;
 
 /**
@@ -29,6 +31,12 @@ import de.japrost.staproma.task.Task;
 public class RenderStaProMa2 {
 	private final File startDir;
 	private final IOFileFilter fileFilter;
+	private String currentFileName = "01_currentItems.html";
+	private String waitingFileName = "02_waitingItems.html";
+	private String scheduledFileName = "03_scheduledItems.html";
+	private String futureFileName = "10_futureItems.html";
+	private String somedayFileName = "20_somedayItems.html";
+	private String doneFileName = "99_doneItems.html";
 
 	/**
 	 * Init.
@@ -70,6 +78,7 @@ public class RenderStaProMa2 {
 		File baseDir = new File("/home/uli/media/DSOne_home/01_ToDo/");
 		if (args.length > 0) {
 			baseDir = new File(args[0]);
+			System.err.println("Starting for " +  baseDir.getAbsolutePath());
 		}
 		RenderStaProMa2 current = new RenderStaProMa2(baseDir, allFilter);
 		current.doAll();
@@ -78,14 +87,18 @@ public class RenderStaProMa2 {
 	private void doAll() throws IOException {
 		Task rootTask = crawlFiles();
 		StatusTaskHtmlRenderer stw = new StatusTaskHtmlRenderer();
-		//ScheduledTaskHtmlRenderer scheduledTaskHtmlRenderer = new ScheduledTaskHtmlRenderer(rootTask,)
-		writeFile(rootTask, stw, "Current", TaskState.CURRENT, "01_currentItems.html");
-		writeFile(rootTask, stw, "Waiting", TaskState.WAITING, "02_waitingItems.html");
-		//writeFile(rootTask, stw, "Scheduled", TaskState.SCHEDULE, "03_scheduledItems.html");
-		writeScheduleFile(rootTask, "Scheduled", "03_scheduledItems.html");
-		writeFile(rootTask, stw, "Future", TaskState.FUTURE, "10_futureItems.html");
-		writeFile(rootTask, stw, "Someday", TaskState.SOMEDAY, "20_somedayItems.html");
-		writeFile(rootTask, stw, "Done", TaskState.DONE, "99_doneItems.html");
+		writeFile(rootTask, stw, "Current", TaskState.CURRENT, currentFileName);
+		writeFile(rootTask, stw, "Waiting", TaskState.WAITING, waitingFileName);
+		// special handling for scheduled tasks
+		// add a line for today
+		LeafTask today = new LeafTask(rootTask, LocalDate.now().toString()+ " +-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+");
+		today.setState(TaskState.SCHEDULE);
+		rootTask.addChild(today);
+		// special rendering
+		writeScheduleFile(rootTask, "Scheduled", scheduledFileName);
+		writeFile(rootTask, stw, "Future", TaskState.FUTURE, futureFileName);
+		writeFile(rootTask, stw, "Someday", TaskState.SOMEDAY, somedayFileName);
+		writeFile(rootTask, stw, "Done", TaskState.DONE, doneFileName);
 		copyStyle();
 	}
 
@@ -119,6 +132,15 @@ public class RenderStaProMa2 {
 		writer.append("<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>");
 		writer.append("</head>");
 		writer.append("<body>");
+		writer.append("<div class='navigation'></div>");
+		writer.append("<a href='"+currentFileName+"'>Current</a> ");
+		writer.append("<a href='"+waitingFileName+"'>Waiting</a> ");
+		writer.append("<a href='"+scheduledFileName+"'>Scheduled</a> ");
+		writer.append("<a href='"+futureFileName+"'>Future</a> " );
+		writer.append("<a href='"+somedayFileName+"'>Someday</a> ");
+		writer.append("<a href='"+doneFileName+"'>Done</a> ");
+		writer.append("</div>");
+		writer.append("<hr/>");
 		writer.append("<div class='titel'>" + title + " Items</div>");
 		writer.append("<hr/>");
 	}
