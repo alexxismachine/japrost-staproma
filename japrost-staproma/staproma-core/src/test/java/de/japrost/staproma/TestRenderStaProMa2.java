@@ -28,7 +28,9 @@ public class TestRenderStaProMa2 {
 	 */
 	@Test
 	public void noReallyATest() throws IOException {
-		RenderStaProMa2.main(new String[] { new File("src/test/resources", "renderDir").getAbsolutePath() });
+		File outDir = new File("target/", "renderDir");
+		outDir.mkdirs();
+		RenderStaProMa2.main(new String[] { new File("src/test/resources", "renderDir").getAbsolutePath(),outDir.getAbsolutePath() });
 		//FIXME assert file contents?
 	}
 }
