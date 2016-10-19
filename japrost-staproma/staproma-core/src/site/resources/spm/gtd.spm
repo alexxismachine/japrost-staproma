@@ -1,7 +1,8 @@
 ' this is an example file ot things to do
 ' starts a comment
 ' (!) Current (:) Waiting (@) Scheduled (#) Future (?) Someday (/) Done
-* (!) do now!
+* (!) do now! With priority 1
+* (5) do now with lower priority of 5
 * (:) waiting for Joe
 * (@) 2034-04-01 retire
 * (#) Not now

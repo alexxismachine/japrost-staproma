@@ -34,11 +34,19 @@ import de.japrost.staproma.task.Task;
  * <th>Symbol</th>
  * <th>Meaning</th>
  * <th>State</th>
+ * <th>Remark</th>
  * </tr>
  * <tr>
  * <td>{@code !}</td>
  * <td>Something to do (a next step).</td>
  * <td>{@code CURRENT}</td>
+ * <td>This next step has priority 1. {@code '!'} is equivalent to {@code '1')}.</td>
+ * </tr>
+ * <tr>
+ * <td>{@code (n)}</td>
+ * <td>Something to do (a next step) with the priority {@code n}.. {@code (1)} and {@code (!)} are equivalent.</td>
+ * <td>{@code CURRENT}</td>
+ * <td>{@code 'n'} ranges from 1 to 9. 0 means unknown.<br> {@code '1'} is equivalent to {@code '!')}.</td>
  * </tr>
  * <tr>
  * <td>{@code @}</td>
@@ -73,6 +81,7 @@ import de.japrost.staproma.task.Task;
  * {@code
  * # Topic on level one
  * * (!) a next step
+ * * (4) a next step with priority 4
  * * (/) something that is done
  * * (#) something to to in some future
  * ## Topic on level two (subtopic)
@@ -86,11 +95,7 @@ import de.japrost.staproma.task.Task;
  * }
  * </pre>
  * 
- * 
- * 
- * 
  * @author alexxismachine (Ulrich David)
- * 
  */
 public class GtdSpmFormat implements SpmFormat {
 	/**
@@ -101,7 +106,7 @@ public class GtdSpmFormat implements SpmFormat {
 	 * Pattern to match against "actions" to take place. The {@code \f} is an additional current task (like a unknown
 	 * symbol) for unit testing.
 	 */
-	private static final Pattern ACTION_PATTERN = Pattern.compile("\\* \\(([!/?#:@\\f])\\) (.*)");
+	private static final Pattern ACTION_PATTERN = Pattern.compile("\\* \\(([!/?#:@\\d\\f])\\) (.*)");
 
 	/**
 	 * Parse the lines into a new root task.
@@ -182,6 +187,7 @@ public class GtdSpmFormat implements SpmFormat {
 						+ currentL);
 				String symbol = stepMatcher.group(1);
 				TaskState state = null;
+				short priority = 0;
 				if ("!".equals(symbol)) {
 					state = TaskState.CURRENT;
 				} else if ("@".equals(symbol)) {
@@ -194,6 +200,8 @@ public class GtdSpmFormat implements SpmFormat {
 					state = TaskState.FUTURE;
 				} else if (":".equals(symbol)) {
 					state = TaskState.WAITING;
+				} else if ((priority =  parseNumber(symbol))!=0) {
+					state = TaskState.CURRENT;
 				} else {
 					// match but unknown symbol? Can only happen on changed action pattern!
 					state = null;
@@ -206,6 +214,7 @@ public class GtdSpmFormat implements SpmFormat {
 				} else {
 					task = new LeafTask(currentT, stepMatcher.group(2));
 					task.setState(state);
+					task.setPriority(priority);
 				}
 				//System.out.println(" * *");
 				Task addTo = currentT;
@@ -231,6 +240,16 @@ public class GtdSpmFormat implements SpmFormat {
 			contentT.addContent(line);
 			//System.out.println("<- Current (" + currentL + ") now " + currentT.getDescription());
 		}
+	}
+	
+	private short parseNumber(String symbol) {
+		short result = 0;
+		try {
+			result = Short.parseShort(symbol);
+		} catch (NumberFormatException e){
+			// nothing to do
+		}
+		return result;
 	}
 	/* FIXME do formating 
 		public List<String> formatTasks(Task task) {

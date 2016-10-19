@@ -26,6 +26,7 @@ public abstract class AbstactTask implements Task {
 	private final String description;
 	private final Task parent;
 	private final List<String> content = new ArrayList<String>();
+	private short priority;
 
 	/**
 	 * Create a task with the given parameter.
@@ -53,7 +54,8 @@ public abstract class AbstactTask implements Task {
 
 	@Override
 	public boolean isInState(TaskState status) {
-		//hier nur eine dummy implementierung die true zurück gibt. alle anderen mit eigener!
+		// hier nur eine dummy implementierung die true zurück gibt. alle
+		// anderen mit eigener!
 		String enter = "-> state " + getDescription() + ": " + state;
 		String leave = "<- state " + getDescription() + ": ";
 		System.out.println(enter);
@@ -108,5 +110,23 @@ public abstract class AbstactTask implements Task {
 	@Override
 	public void addContent(String line) {
 		this.content.add(line);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public short getPriority() {
+		return priority;
+	}
+
+	/**
+	 * Set the priority.
+	 * 
+	 * @param priority
+	 *            the new priority.
+	 */
+	public void setPriority(short priority) {
+		this.priority = priority;
 	}
 }

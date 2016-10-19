@@ -12,7 +12,7 @@
 
   <groupId>de.japrost.staproma</groupId>
   <artifactId>staproma</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
+  <version>0.0.4-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Static Project Management</name>

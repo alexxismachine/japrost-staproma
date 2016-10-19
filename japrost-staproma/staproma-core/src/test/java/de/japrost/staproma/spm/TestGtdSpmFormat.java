@@ -172,6 +172,8 @@ public class TestGtdSpmFormat {
 		Task firstAction = rootIterator.next();
 		assertEquals("current", firstAction.getDescription());
 		assertTrue(firstAction.isInState(TaskState.CURRENT));
+		assertEquals(0,firstAction.getPriority());
+		
 	}
 
 	/**
@@ -242,6 +244,21 @@ public class TestGtdSpmFormat {
 		Task firstAction = rootIterator.next();
 		assertEquals("waiting", firstAction.getDescription());
 		assertTrue(firstAction.isInState(TaskState.WAITING));
+	}
+
+	/**
+	 * Base parsing a priority action.
+	 */
+	@Test
+	public void parsePriorityAction4() {
+		List<String> lines = new ArrayList<String>();
+		lines.add("* (4) prio 4");
+		Task result = cut.parseLines(lines);
+		Iterator<Task> rootIterator = result.iterator();
+		Task firstAction = rootIterator.next();
+		assertEquals("prio 4", firstAction.getDescription());
+		assertTrue(firstAction.isInState(TaskState.CURRENT));
+		assertEquals(4,firstAction.getPriority());
 	}
 
 	/**
