@@ -172,7 +172,7 @@ public class TestGtdSpmFormat {
 		Task firstAction = rootIterator.next();
 		assertEquals("current", firstAction.getDescription());
 		assertTrue(firstAction.isInState(TaskState.CURRENT));
-		assertEquals(0,firstAction.getPriority());
+		assertEquals(1,firstAction.getPriority());
 		
 	}
 

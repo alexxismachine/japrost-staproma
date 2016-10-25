@@ -190,6 +190,7 @@ public class GtdSpmFormat implements SpmFormat {
 				short priority = 0;
 				if ("!".equals(symbol)) {
 					state = TaskState.CURRENT;
+					priority=1;
 				} else if ("@".equals(symbol)) {
 					state = TaskState.SCHEDULE;
 				} else if ("/".equals(symbol)) {

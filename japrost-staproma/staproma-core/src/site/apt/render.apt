@@ -6,15 +6,54 @@
  
 Renderer
 
-  Diese Seite beschreibt, welche ausgaben StaProMa erzeugt.
+  Diese Seite beschreibt, welche Ausgaben StaProMa erzeugt.
 
-* StatusTaskHtmlRenderer
+* RenderStaProMa2
 
-  Dieser Renderer erzeugt für einen Status eine html-Datei, in der die Tasks in ihrer alphabetischen Reihenfolge hierarchisch dargestellt werden.
-  Directory-Tasks werden als Link auf das Verzeichnis gerendert.
+  Die Main-Class erzeugt das Grundgerüst der Ausgabe.
+  Für die Formatierung der HTML-Ausgabe wird die Datei <<<style.css>>> aus dem gleichen Verzeichnis eingebunden.
+  Als Navigation (css-Class <<<navigation>>>) werden die Links zu den anderen Status-Dateien erzeugt.
+  Als Titel (css-Class <<<title>>>) wird der entsprechende TaskState angegeben.
+  Als Fußzeile wird das aktuelle Datum ausgegeben css-Class <<<generationTime>>>).
+
+** StatusTaskHtmlRenderer
+
+  Dieser Renderer erzeugt für einen Status die html-Ausgabe, in der die Tasks in ihrer alphabetischen Reihenfolge hierarchisch dargestellt werden.
+  Die Hierarchie wird über Header-Tags abgebildet.
+  
+  Directory-Tasks werden mit Link auf das Verzeichnis gerendert.
   Bei einer entsprechenden Einstellung des Browsers kann man die StaProMa-Dateien aus dem Verzeichnis direkt im Editor öffnen.
   
-* ScheduledTaskHtmlRenderer
+  LeafTasks (echte Todos) werden jeweils innerhalb einer unsortierten Liste (<<<ul>>>) als Listeneinträge (<<<li>>>) dargestellt.
+  Tasks mit einer Priorität haben jeweils die css-Class <<<priority>>><n> ihrer Priorität.
+  
+** ScheduledTaskHtmlRenderer
 
   Dieser Render erzeugt eine nach Beschreibung sortierte Liste aller Tasks die im Status "SCHEDULED" sind. 
   Beginnt die Beschreibung mit einem Datum im ISO-Format, dann erhält man eine Sortierung nach Datum. 
+  
+** Beispiel
+
+-----
+<html>
+  <head>
+    <title>Current</title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+  <div class="navigation"><a href="01_currentItems.html">Current</a> ...</div>
+  <hr>
+  <div class="title">Current Items</div>
+  <hr>
+  <ul>
+    <li class="priority1">do now with priority of 1</li>
+  </ul>
+  <h1>A level down</h1>
+  <ul>
+    <li>No priority</li>
+  </ul>
+  <div class="generationTime">Tue Oct 25 21:06:31 CEST 2016</div>
+  </body>
+</html>
+-----

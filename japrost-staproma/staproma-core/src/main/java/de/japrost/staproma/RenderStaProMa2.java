@@ -156,7 +156,7 @@ public class RenderStaProMa2 {
 		writer.append("<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>");
 		writer.append("</head>");
 		writer.append("<body>");
-		writer.append("<div class='navigation'></div>");
+		writer.append("<div class='navigation'>");
 		writer.append("<a href='" + currentFileName + "'>Current</a> ");
 		writer.append("<a href='" + waitingFileName + "'>Waiting</a> ");
 		writer.append("<a href='" + scheduledFileName + "'>Scheduled</a> ");
@@ -165,12 +165,12 @@ public class RenderStaProMa2 {
 		writer.append("<a href='" + doneFileName + "'>Done</a> ");
 		writer.append("</div>");
 		writer.append("<hr/>");
-		writer.append("<div class='titel'>" + title + " Items</div>");
+		writer.append("<div class='title'>" + title + " Items</div>");
 		writer.append("<hr/>");
 	}
 
 	private void writeFoot(StringWriter writer) {
-		writer.append(new Date().toString());
+		writer.append("<div class='generationTime'>" + new Date().toString()+"</div>");
 		writer.append("</body>");
 		writer.append("</html>");
 	}

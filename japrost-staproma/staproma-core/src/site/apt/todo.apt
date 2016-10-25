@@ -1,0 +1,21 @@
+  -----
+  StaProMa ToDo
+  -----
+  alexxismachine
+  -----
+ 
+To Do
+
+* GTD-Format
+
+  * FolderTask mit Priorität
+  
+    * Alle Tasks darunter erben die Priorität, wenn sie keine eigene besitzen.
+
+* Rendering
+
+  * I18N
+  
+* Allgemein
+
+  * Einen Logger verwenden

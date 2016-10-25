@@ -12,20 +12,16 @@ import de.japrost.staproma.task.Task;
  * Renderer to create HTML output from {@link Task}s.
  * 
  * @author alexxismachine (Ulrich David)
- * 
  */
 public class StatusTaskHtmlRenderer {
+
 	/**
 	 * Do the rendering of the given task with its subtasks in status to the writer.
 	 * 
-	 * @param root
-	 *            the root task to start rendering from. MUST NOT be {@code null}.
-	 * @param status
-	 *            the status tasks must be in for rendering.
-	 * @param writer
-	 *            the writer to render to. MUST NOT be {@code null}.
-	 * @throws IOException
-	 *             on io failures on the writer.
+	 * @param root the root task to start rendering from. MUST NOT be {@code null}.
+	 * @param status the status tasks must be in for rendering.
+	 * @param writer the writer to render to. MUST NOT be {@code null}.
+	 * @throws IOException on io failures on the writer.
 	 */
 	public void render(Task root, TaskState status, Writer writer) throws IOException {
 		//TODO writer and status as instance variables
@@ -60,7 +56,11 @@ public class StatusTaskHtmlRenderer {
 				}
 				writer.append("<ul>\n");
 			}
-			writer.append("  <li>" + task.getDescription() + "</li>\n");
+			if (task.getPriority() > 0) {
+				writer.append("  <li class='priority"+task.getPriority()+"'>" + task.getDescription() + "</li>\n");
+			} else {
+				writer.append("  <li>" + task.getDescription() + "</li>\n");
+			}
 		} else {
 			if (renderState.openul) {
 				writer.append("</ul>\n");
@@ -80,6 +80,7 @@ public class StatusTaskHtmlRenderer {
 	}
 
 	private class RenderState {
+
 		boolean openul = false;
 		boolean inBlock = false;
 	}

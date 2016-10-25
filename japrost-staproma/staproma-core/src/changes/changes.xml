@@ -6,21 +6,30 @@
     <release
       version="0.0.4"
       description="priorities">
-      <action type="new">
-        Next steps with priority.
+      <action type="add">
+        Next steps (current items) with priority. Updated sample style.css.
+      </action>
+      <action type="add">
+        Rendering: css class for generation date.
+      </action>
+      <action type="fix">
+        Rendering: navigation div had wrong closing tag. Corrected title-css-class
+      </action>
+      <action type="add">
+        Started a todo page.
       </action>
     </release>
     <release
       version="0.0.3"
       date="unreleased"
       description="pom and reports">
-      <action type="new">
+      <action type="add">
         Renderer links between pages.
       </action>
-      <action type="new">
+      <action type="add">
         Renderer for scheduled tasks and syntetic 'today' task.
       </action>
-      <action type="new">
+      <action type="add">
         Use enum for states.
       </action>
       <action type="add">

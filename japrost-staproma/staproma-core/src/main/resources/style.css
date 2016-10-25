@@ -4,37 +4,182 @@ body {
 /* headings */
 h1, h2, h3, h4, h5, h6 {
 	margin: 0pt;
-	padding-top: 0.4em;	
+	padding-top: 0.2em;
 }
+
 h1 {
-	font-size: 125%;
-	text-indent: 0em;
+	font-size: 110%;
 	margin: 0pt;
 }
 
+h1 a {
+	color: red;
+}
+
 h2 {
-	font-size: 120%;
-	text-indent: 1em;
+	font-size: 108%;
+	margin-left: 5pt;
+	color: green;
 }
+
+h2 a {
+	color: green;
+}
+
 h3 {
-	font-size: 115%;
-	text-indent: 2em;
+	font-size: 106%;
+	margin-left: 15pt;
 }
+
+h3 a {
+	color: black;
+}
+
 h4 {
-	font-size: 110%;
-	text-indent: 0em;
+	font-size: 104%;
+	margin-left: 25pt;
+	color: gray;
 }
+
 h5 {
-	font-size: 105%;
-	text-indent: 0em;
+	font-size: 102%;
+	margin-left: 35pt;
+	color: darkgray;
 }
+
 h6 {
 	font-size: 100%;
-	text-indent: 0em;
+	margin-left: 45pt;
+	color: lightgray;
 }
 /* lists */
 ul {
 	padding-left: 1em;
-	margin: 0em 0em 0em 3em;
-	padding-top: 0.3em;	
+	margin: 0pt;
+	padding-top: 0.3em;
+}
+
+h1+ul {
+	margin-left: 10pt;
+}
+
+h2+ul {
+	margin-left: 20pt;
+}
+
+h3+ul {
+	margin-left: 30pt;
+}
+
+h4+ul {
+	margin-left: 40pt;
+}
+
+h5+ul {
+	margin-left: 50pt;
+}
+
+h6+ul {
+	margin-left: 60pt;
+}
+/* priority */
+ul {
+	list-style: none;
+	padding: 0px;
+}
+
+li:before {
+	content: '\2022';
+	margin-right: 1ex;
+}
+
+.priority1 {
+	color: #ff0000;
+}
+
+li.priority1:before {
+	content: '\2460';
+}
+
+.priority2 {
+	color: #ff3300;
+}
+
+li.priority2:before {
+	content: '\2461';
+}
+
+.priority3 {
+	color: #ff6600;
+}
+
+li.priority3:before {
+	content: '\2462';
+}
+
+.priority4 {
+	color: #ff9900;
+}
+
+li.priority4:before {
+	content: '\2463';
+}
+
+.priority5 {
+	color: #ffcc00;
+}
+
+li.priority5:before {
+	content: '\2464';
+}
+
+.priority6 {
+	color: #c09900;
+}
+
+li.priority6:before {
+	content: '\2465';
+}
+
+.priority7 {
+	color: #806600;
+}
+
+li.priority7:before {
+	content: '\2466';
+}
+
+.priority8 {
+	color: #403300;
+}
+
+li.priority8:before {
+	content: '\2467';
+}
+
+.priority9 {
+	color: #000000;
+}
+
+li.priority9:before {
+	content: '\2468';
+}
+/* other */
+.title {
+	font-size: 150%;
+}
+
+@media print {
+	/* zusätzliche oder abweichende CSS-Regeln für Drucker */
+	body {
+		font-size: 9pt;
+	}
+	a:link {
+		text-decoration: none;
+		color: black;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		border-bottom: 1px solid;
+		font-size: 10pt;
+	}
 }

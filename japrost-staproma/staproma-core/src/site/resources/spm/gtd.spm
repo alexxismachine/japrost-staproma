@@ -2,14 +2,22 @@
 ' starts a comment
 ' (!) Current (:) Waiting (@) Scheduled (#) Future (?) Someday (/) Done
 * (!) do now! With priority 1
-* (5) do now with lower priority of 5
+* (1) do now with priority of 1
+* (2) do now with priority of 2
+* (3) do now with priority of 3
+* (4) do now with priority of 4
+* (5) do now with priority of 5
+* (6) do now with priority of 6
+* (7) do now with priority of 7
+* (8) do now with priority of 8
+* (9) do now with priority of 9 
 * (:) waiting for Joe
 * (@) 2034-04-01 retire
 * (#) Not now
 * (?) Maybe / Someday
 * (/) this is already done
 # Weitere Features
-* (#) Kommentare
+* (9) Kommentare
 ** Kommentar ist nicht Teil des Contents, gehört aber zur Aufgabe!
 ** Welches Kommentar-Zeichen
 *** Mal welche in Dateien einbauen
