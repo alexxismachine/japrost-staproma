@@ -8,10 +8,10 @@
     <breadcrumbs>
       <item
         name="JaProSt"
-        href="${japrost.project.url}/index.html" />
+        href="http://www.japrost.de/index.html" />
       <item
         name="Java"
-        href="${japrost.project.url}/java/index.html" />
+        href="http://www.japrost.de/java/index.html" />
       <item
         name="StaProMa"
         href="index.html" />

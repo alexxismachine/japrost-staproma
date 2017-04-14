@@ -14,11 +14,7 @@
 
   <name>Static Project Management Core</name>
   <description>Core Modules of staproma</description>
-  <url>${japrost.project.url}/${japrost.site.project.path}/</url>
-
-  <properties>
-    <japrost.site.project.path>java/staproma/staproma-core</japrost.site.project.path>
-  </properties>
+  <url>http://www.japrost.de/java/staproma/staproma-core/</url>
 
   <dependencies>
     <dependency>
@@ -141,9 +137,9 @@
 
   <distributionManagement>
     <site>
-      <id>${japrost.distribution.site.id}</id>
+      <id>japrostSiteId</id>
       <name>JaProSt-Site</name>
-      <url>${japrost.distribution.site.url}/${japrost.site.project.path}/</url>
+      <url>${japrost.distribution.site.url}/java/staproma/staproma-core/</url>
     </site>
   </distributionManagement>
 </project>
