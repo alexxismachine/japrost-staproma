@@ -4,8 +4,9 @@
   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <body>
     <release
-      version="0.0.3"
-      description="pom and reports">
+      version="0.0.4"
+      description="pom and reports"
+      date="2017-05-10">
       <action type="add">
         Add changes report.
       </action>

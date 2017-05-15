@@ -5,7 +5,8 @@
   <body>
     <release
       version="0.0.4"
-      description="priorities">
+      description="priorities"
+      date="2017-05-10">
       <action type="add">
         Next steps (current items) with priority. Updated sample style.css.
       </action>
