@@ -1,7 +1,5 @@
 package de.japrost.staproma;
 
-import static de.japrost.staproma.TaskState.CURRENT;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -24,74 +22,70 @@ import de.japrost.staproma.task.Task;
 
 /**
  * Second edition of RenderStaProMa.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
 public class RenderStaProMa2 {
+
 	/** The base dir to read from. */
 	private final File startDir;
 	/** The base dir to write to. */
 	private final File outDir;
 	private final IOFileFilter fileFilter;
-	private String currentFileName = "01_currentItems.html";
-	private String waitingFileName = "02_waitingItems.html";
-	private String scheduledFileName = "03_scheduledItems.html";
-	private String futureFileName = "10_futureItems.html";
-	private String somedayFileName = "20_somedayItems.html";
-	private String doneFileName = "99_doneItems.html";
+	private final String currentFileName = "01_currentItems.html";
+	private final String waitingFileName = "02_waitingItems.html";
+	private final String scheduledFileName = "03_scheduledItems.html";
+	private final String futureFileName = "10_futureItems.html";
+	private final String somedayFileName = "20_somedayItems.html";
+	private final String doneFileName = "99_doneItems.html";
 
 	/**
 	 * Init using start dir also as out dir.
-	 * 
-	 * @param startDir
-	 *            The base dir to read from.
-	 * @param fileFilter
-	 *            filter which files to use.
+	 *
+	 * @param startDir The base dir to read from.
+	 * @param fileFilter filter which files to use.
 	 */
-	public RenderStaProMa2(File startDir, IOFileFilter fileFilter) {
+	public RenderStaProMa2(final File startDir, final IOFileFilter fileFilter) {
 		this(startDir, startDir, fileFilter);
 	}
 
 	/**
 	 * Init.
-	 * 
-	 * @param startDir
-	 *            The base dir to read from.
-	 * @param outDir
-	 *            The base dir to write to.
-	 * @param fileFilter
-	 *            filter which files to use.
+	 *
+	 * @param startDir The base dir to read from.
+	 * @param outDir The base dir to write to.
+	 * @param fileFilter filter which files to use.
 	 */
-	public RenderStaProMa2(File startDir, File outDir, IOFileFilter fileFilter) {
+	public RenderStaProMa2(final File startDir, final File outDir, final IOFileFilter fileFilter) {
 		this.startDir = startDir;
 		this.outDir = outDir;
 		this.fileFilter = fileFilter;
 		// FIXME use some logger
 		System.setOut(new PrintStream(new OutputStream() {
+
 			@Override
-			public void write(int b) throws IOException {
+			public void write(final int b) throws IOException {
 				// NOOP
 			}
 		}));
 	}
 
 	/**
-	 * @param args
-	 *            command line args
-	 * @throws IOException
-	 *             on io problems
+	 * @param args command line args
+	 * @throws IOException on io problems
 	 */
-	public static void main(String[] args) throws IOException {
-		IOFileFilter currentFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
-				new RegexFileFilter("^\\d*_?current\\..*$", IOCase.SENSITIVE));
-		IOFileFilter futureFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
-				new RegexFileFilter("^\\d*_?future\\..*$", IOCase.SENSITIVE));
-		IOFileFilter doneFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
-				new RegexFileFilter("^\\d*_?done\\..*$", IOCase.SENSITIVE));
-		IOFileFilter gtdFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
-				new RegexFileFilter("^\\d*_?gtd\\..*$", IOCase.SENSITIVE));
-		IOFileFilter allFilter = FileFilterUtils.or(currentFilter, futureFilter, doneFilter, gtdFilter);
+	public static void main(final String[] args) throws IOException {
+		final IOFileFilter currentFilter = FileFilterUtils
+				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?current\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter futureFilter = FileFilterUtils
+				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?future\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter doneFilter = FileFilterUtils
+				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?done\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter gtdFilter = FileFilterUtils
+				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?gtd\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter gtd2Filter = FileFilterUtils
+				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^([A-Z]*)-(\\d*)_(.*)\\.spm$", IOCase.SENSITIVE));
+		final IOFileFilter allFilter = FileFilterUtils.or(currentFilter, futureFilter, doneFilter, gtdFilter);
 		File baseDir = new File("/home/uli/media/DSOne_home/01_ToDo/");
 		File outDir = new File("/home/uli/media/DSOne_home/01_ToDo/");
 		if (args.length > 0) {
@@ -103,18 +97,19 @@ public class RenderStaProMa2 {
 			outDir = new File(args[1]);
 			System.err.println("Writing to " + outDir.getAbsolutePath());
 		}
-		RenderStaProMa2 current = new RenderStaProMa2(baseDir, outDir, allFilter);
+		final RenderStaProMa2 current = new RenderStaProMa2(baseDir, outDir, allFilter);
 		current.doAll();
 	}
 
 	private void doAll() throws IOException {
-		Task rootTask = crawlFiles();
-		StatusTaskHtmlRenderer stw = new StatusTaskHtmlRenderer();
+		final Task rootTask = crawlFiles();
+		final StatusTaskHtmlRenderer stw = new StatusTaskHtmlRenderer();
 		writeFile(rootTask, stw, "Current", TaskState.CURRENT, currentFileName);
 		writeFile(rootTask, stw, "Waiting", TaskState.WAITING, waitingFileName);
 		// special handling for scheduled tasks
 		// add a line for today
-		LeafTask today = new LeafTask(rootTask,
+		final LeafTask today = new LeafTask(
+				rootTask,
 				LocalDate.now().toString() + " +-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+");
 		today.setState(TaskState.SCHEDULE);
 		rootTask.addChild(today);
@@ -126,19 +121,19 @@ public class RenderStaProMa2 {
 		copyStyle();
 	}
 
-	private void writeScheduleFile(Task root, String title, String fileName) throws IOException {
+	private void writeScheduleFile(final Task root, final String title, final String fileName) throws IOException {
 		StringWriter writer;
 		writer = new StringWriter();
 		writeHead(writer, title);
-		ScheduledTaskHtmlRenderer scheduledTaskHtmlRenderer = new ScheduledTaskHtmlRenderer(root, writer);
+		final ScheduledTaskHtmlRenderer scheduledTaskHtmlRenderer = new ScheduledTaskHtmlRenderer(root, writer);
 		scheduledTaskHtmlRenderer.render();
 		writeFoot(writer);
 
 		writeFile(fileName, writer.toString());
 	}
 
-	private void writeFile(Task root, StatusTaskHtmlRenderer stw, String title, TaskState status, String fileName)
-			throws IOException {
+	private void writeFile(final Task root, final StatusTaskHtmlRenderer stw, final String title, final TaskState status,
+			final String fileName) throws IOException {
 		StringWriter writer;
 		writer = new StringWriter();
 		writeHead(writer, title);
@@ -147,7 +142,7 @@ public class RenderStaProMa2 {
 		writeFile(fileName, writer.toString());
 	}
 
-	private void writeHead(StringWriter writer, String title) {
+	private void writeHead(final StringWriter writer, final String title) {
 		writer.append("<!DOCTYPE html>\n");
 		writer.append("<html>");
 		writer.append("<head>");
@@ -169,27 +164,27 @@ public class RenderStaProMa2 {
 		writer.append("<hr/>");
 	}
 
-	private void writeFoot(StringWriter writer) {
-		writer.append("<div class='generationTime'>" + new Date().toString()+"</div>");
+	private void writeFoot(final StringWriter writer) {
+		writer.append("<div class='generationTime'>" + new Date().toString() + "</div>");
 		writer.append("</body>");
 		writer.append("</html>");
 	}
 
 	private Task crawlFiles() throws IOException {
-		Task root = new FolderTask(null, "ROOT");
-		TaskFileWalker fileWalker = new TaskFileWalker(root, startDir, fileFilter);
+		final Task root = new FolderTask(null, "ROOT");
+		final TaskFileWalker fileWalker = new TaskFileWalker(root, startDir, fileFilter);
 		fileWalker.crawl();
 		return root;
 	}
 
-	private void writeFile(String fileName, String content) throws IOException {
+	private void writeFile(final String fileName, final String content) throws IOException {
 		FileUtils.write(new File(outDir, fileName), content);
 	}
 
 	private void copyStyle() throws IOException {
-		File srcCssFile = new File("src/main/resources/style.css");
+		final File srcCssFile = new File("src/main/resources/style.css");
 		if (srcCssFile.canRead()) {
-			File destCssFile = new File(outDir, "style.css");
+			final File destCssFile = new File(outDir, "style.css");
 			FileUtils.copyFile(srcCssFile, destCssFile);
 		}
 	}
