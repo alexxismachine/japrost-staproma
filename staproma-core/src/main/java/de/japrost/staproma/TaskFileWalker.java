@@ -119,7 +119,7 @@ public class TaskFileWalker extends DirectoryWalker<String> {
 			matcher = NUMBER_DIR_PATTERN.matcher(dirName);
 			if (matcher.matches()) {
 				match = true;
-				// keep descriptin
+				// keep description
 			}
 			matcher = NAME_DIR_PATTERN.matcher(dirName);
 			if (matcher.matches()) {
@@ -176,19 +176,21 @@ public class TaskFileWalker extends DirectoryWalker<String> {
 	@Override
 	protected void handleFile(final File file, final int depth, final Collection<String> results) throws IOException {
 		OUT.println("Handle FILE:" + file);
-		final Matcher m = FILE_STATUS_PATTERN.matcher(file.getName());
 		String status = "CURRENT";
 		Task fileRoot = currentTask;
-		if (m.matches()) {
-			status = m.group(1).toUpperCase();
-			OUT.println(status);
+		final Matcher fileName = FILE_NAME_PATTERN.matcher(file.getName());
+		if (fileName.matches()) {
+			status = "GTD";
+			final String description = fileName.group(1) + "-" + fileName.group(2) + " "
+					+ fileName.group(3).replace('_', ' ');
+			FolderTask folderTask = new FolderTask(currentTask, description);
+			fileRoot.addChild(folderTask);
+			fileRoot = folderTask;
 		} else {
-			final Matcher fileName = FILE_NAME_PATTERN.matcher(file.getName());
-			if (fileName.matches()) {
-				status = "GTD";
-				final String description = fileName.group(1) + "-" + fileName.group(2) + " "
-						+ fileName.group(3).replace('_', ' ');
-				fileRoot = new FolderTask(currentTask, description);
+			final Matcher m = FILE_STATUS_PATTERN.matcher(file.getName());
+			if (m.matches()) {
+				status = m.group(1).toUpperCase();
+				OUT.println("Status from File: '" + status + "'");
 			} else {
 				OUT.println("This should not happen");
 			}
@@ -225,8 +227,8 @@ public class TaskFileWalker extends DirectoryWalker<String> {
 
 	private boolean containsCompleted(final File directory) {
 		OUT.println("containsCompleted " + directory);
-		final IOFileFilter completedFilter = FileFilterUtils
-				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?completed\\.?.*$", IOCase.SENSITIVE));
+		final IOFileFilter completedFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?completed\\.?.*$", IOCase.SENSITIVE));
 		if (FileUtils.listFiles(directory, completedFilter, null).size() > 0) {
 			return true;
 		}

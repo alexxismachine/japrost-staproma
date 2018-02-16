@@ -29,4 +29,18 @@ StaProMa - core
 
     * {{{./spm/gtd.spm}Eingabe}}-Datei
 
+* Verarbeitung
+
+  Es werden Dateien verarbeitet, die den folgenden Formaten entsprechen:
+  
+    * <<<^\d*_?current\..*$>>> Datei für aktuelle Tasks. 
+    Analog für die anderen Status (waiting, schedule, future, someday, done).
     
+    * <<<^\d*_?gtd\..*$>>> Datei im GTD-Format. 
+    
+    * <<<^([A-Z]*)-(\d*)_(.*)\.spm$>>> Datei im GTD-Format als eigener FolderTask.
+    
+  Verzeichnisse werden nur in Betracht gezogen, wenn sie den folgenden Formaten entsprechen:
+  
+    * <<<^([A-Z]+)-(\d+)_(.*$)>>> Verzeichnis mit Aufgaben
+      

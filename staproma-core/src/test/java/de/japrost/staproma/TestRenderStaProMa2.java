@@ -33,4 +33,17 @@ public class TestRenderStaProMa2 {
 		RenderStaProMa2.main(new String[] { new File("src/test/resources", "renderDir").getAbsolutePath(),outDir.getAbsolutePath() });
 		//FIXME assert file contents?
 	}
+	/**
+	 * test.
+	 * 
+	 * @throws IOException
+	 *             on io failure.
+	 */
+	@Test
+	public void renderMixedContent() throws IOException {
+		File outDir = new File("target/", "mixContent");
+		outDir.mkdirs();
+		RenderStaProMa2.main(new String[] { new File("src/test/resources", "mixFlatAndDirectoryTasks").getAbsolutePath(),outDir.getAbsolutePath() });
+		//FIXME assert file contents?
+	}
 }

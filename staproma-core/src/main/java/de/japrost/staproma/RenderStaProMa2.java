@@ -61,13 +61,16 @@ public class RenderStaProMa2 {
 		this.outDir = outDir;
 		this.fileFilter = fileFilter;
 		// FIXME use some logger
-		System.setOut(new PrintStream(new OutputStream() {
+		boolean log = false;
+		if (!log) {
+			System.setOut(new PrintStream(new OutputStream() {
 
-			@Override
-			public void write(final int b) throws IOException {
-				// NOOP
-			}
-		}));
+				@Override
+				public void write(final int b) throws IOException {
+					// NOOP
+				}
+			}));
+		}
 	}
 
 	/**
@@ -75,17 +78,24 @@ public class RenderStaProMa2 {
 	 * @throws IOException on io problems
 	 */
 	public static void main(final String[] args) throws IOException {
-		final IOFileFilter currentFilter = FileFilterUtils
-				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?current\\..*$", IOCase.SENSITIVE));
-		final IOFileFilter futureFilter = FileFilterUtils
-				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?future\\..*$", IOCase.SENSITIVE));
-		final IOFileFilter doneFilter = FileFilterUtils
-				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?done\\..*$", IOCase.SENSITIVE));
-		final IOFileFilter gtdFilter = FileFilterUtils
-				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^\\d*_?gtd\\..*$", IOCase.SENSITIVE));
-		final IOFileFilter gtd2Filter = FileFilterUtils
-				.and(FileFilterUtils.fileFileFilter(), new RegexFileFilter("^([A-Z]*)-(\\d*)_(.*)\\.spm$", IOCase.SENSITIVE));
-		final IOFileFilter allFilter = FileFilterUtils.or(currentFilter, futureFilter, doneFilter, gtdFilter);
+		final IOFileFilter currentFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?current\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter waitingFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?waiting\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter scheduleFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?schedule\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter futureFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?future\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter somedayFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?someday\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter doneFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?done\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter gtdFilter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^\\d*_?gtd\\..*$", IOCase.SENSITIVE));
+		final IOFileFilter gtd2Filter = FileFilterUtils.and(FileFilterUtils.fileFileFilter(),
+				new RegexFileFilter("^([A-Z]+)-(\\d+)_(.*)\\.spm$", IOCase.SENSITIVE));
+		final IOFileFilter allFilter = FileFilterUtils.or(currentFilter, waitingFilter, scheduleFilter, futureFilter,
+				somedayFilter, doneFilter, gtdFilter, gtd2Filter);
 		File baseDir = new File("/home/uli/media/DSOne_home/01_ToDo/");
 		File outDir = new File("/home/uli/media/DSOne_home/01_ToDo/");
 		if (args.length > 0) {
@@ -108,8 +118,7 @@ public class RenderStaProMa2 {
 		writeFile(rootTask, stw, "Waiting", TaskState.WAITING, waitingFileName);
 		// special handling for scheduled tasks
 		// add a line for today
-		final LeafTask today = new LeafTask(
-				rootTask,
+		final LeafTask today = new LeafTask(rootTask,
 				LocalDate.now().toString() + " +-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+-_-+");
 		today.setState(TaskState.SCHEDULE);
 		rootTask.addChild(today);
