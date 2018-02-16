@@ -9,7 +9,7 @@
 
   <groupId>de.japrost.staproma</groupId>
   <artifactId>staproma</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
+  <version>0.0.5</version>
   <packaging>pom</packaging>
 
   <name>Static Project Management</name>
@@ -66,6 +66,6 @@
   <scm>
     <developerConnection>scm:git:git://bitbucket.org/daprost/japrost-staproma</developerConnection>
     <url>https://bitbucket.org/daprost/japrost-staproma</url>
-    <tag>HEAD</tag>
+    <tag>staproma-0.0.5</tag>
   </scm>
 </project>
