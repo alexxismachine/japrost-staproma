@@ -5,6 +5,11 @@
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
   name="JaProSt StaProMa">
   <body>
+    <links>
+      <item
+        name="Datenschutz"
+        href="http://www.japrost.de/datenschutz.html" />
+    </links>
     <breadcrumbs>
       <item
         name="JaProSt"
