@@ -4,6 +4,14 @@
   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <body>
     <release
+      version="0.0.6"
+      description="Java 11"
+      date="TBD">
+      <action type="update">
+        Use Java 11 as base.
+      </action>
+    </release>
+    <release
       version="0.0.5"
       description="GTD-Files"
       date="2018-02-16">
