@@ -1,0 +1,3 @@
+= Core Components
+
+some dummy text

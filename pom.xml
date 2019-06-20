@@ -21,6 +21,9 @@
 
   <properties>
     <japrost.site.locales>de</japrost.site.locales>
+    <!-- version override from parent -->
+    <version.override.asciidoctor-maven-plugin>1.5.6</version.override.asciidoctor-maven-plugin>
+    <version.override.maven-assembly-plugin>3.1.1</version.override.maven-assembly-plugin>
   </properties>
 
   <modules>
@@ -30,25 +33,29 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>com.agilejava.docbkx</groupId>
-        <artifactId>docbkx-maven-plugin</artifactId>
-        <version>2.0.13</version>
-        <dependencies>
-          <dependency>
-            <groupId>net.sf.docbook</groupId>
-            <artifactId>docbook-xml</artifactId>
-            <version>5.0-all</version>
-            <classifier>resources</classifier>
-            <type>zip</type>
-            <scope>runtime</scope>
-          </dependency>
-        </dependencies>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <version>${version.override.asciidoctor-maven-plugin}</version>
+        <configuration>
+          <!-- will come from parent -->
+          <sourceDirectory>${basedir}/src/asciidoc</sourceDirectory>
+        </configuration>
         <executions>
           <execution>
+            <id>output-html</id>
+            <phase>generate-resources</phase>
             <goals>
-              <goal>generate-xhtml</goal>
+              <goal>process-asciidoc</goal>
             </goals>
-            <phase>package</phase>
+            <configuration>
+              <sourceHighlighter>highlightjs</sourceHighlighter>
+              <backend>html</backend>
+              <doctype>book</doctype>
+              <attributes>
+                <toc />
+                <linkcss>false</linkcss>
+              </attributes>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -60,7 +67,7 @@
         <!-- TODO remove on next parent -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.1</version>
+        <version>${version.override.maven-assembly-plugin}</version>
       </plugin>
     </plugins>
   </build>

@@ -1,0 +1,7 @@
+= Sta Pro Ma : Static file Project Management
+
+:leveloffset: +1
+
+include::staproma.adoc[]
+
+include::../../staproma-core/src/asciidoc/staproma-core.adoc[]

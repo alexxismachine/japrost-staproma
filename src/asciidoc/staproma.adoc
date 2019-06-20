@@ -1,0 +1,15 @@
+= Overview
+
+== Implementation
+
+Current implementation
+
+Single Main class RenderStaProMa
+
+Main method renders 3 html pages based on current, future and done files in the directory and sub directories.
+
+Files are used as Markdown-like text. Included headlines are shifted down to the level of directory depth.
+
+== Known Bugs
+
+Folders without content are displayd on all html pages
