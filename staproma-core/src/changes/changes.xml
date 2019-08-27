@@ -4,9 +4,15 @@
   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <body>
     <release
-      version="0.0.6"
-      description="Java 11"
-      date="TBD">
+      version="0.1.0"
+      description="Java 11 and semantic versioning"
+      date="2019-08-27">
+      <action type="update">
+        Use semantic versioning so this release becomes 0.1.0.
+      </action>
+      <action type="update">
+        Switch from docbooc to asiidoc.
+      </action>
       <action type="update">
         Use Java 11 as base.
       </action>
