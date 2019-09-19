@@ -6,9 +6,12 @@
       <release
       version="0.2.0"
       description="Priority filter"
-      date="TBD">
+      date="2019-09-19">
       <action type="add">
-        Filter form for tasks.
+        Priorites for container tasks and rendering to be filtered by priority form.
+      </action>
+      <action type="add">
+        Filter form for tasks by priority.
       </action>
     </release>
     <release

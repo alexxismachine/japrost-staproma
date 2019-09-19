@@ -200,12 +200,11 @@ public class RenderStaProMa2 {
 		writer.append("  max-height: 0;");
 		writer.append("  overflow: hidden;");
 		writer.append("}");
-		writer.append("#prio" + prio + ":checked ~h2.priority" + prio + " {");
-		writer.append("  max-height: 100%;");
-		writer.append("}");
-		writer.append("#prio" + prio + ":checked ~h3.priority" + prio + " {");
-		writer.append("  max-height: 100%;");
-		writer.append("}");
+		for (int level = 2; level < 7; level++) {
+			writer.append("#prio" + prio + ":checked ~h" + level + ".priority" + prio + " {");
+			writer.append("  max-height: 100%;");
+			writer.append("}");
+		}
 		writer.append("#prio" + prio + ":checked ~ul li.priority" + prio + " {");
 		writer.append("  max-height: 100%;");
 		writer.append("}");

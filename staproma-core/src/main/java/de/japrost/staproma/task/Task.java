@@ -1,6 +1,7 @@
 package de.japrost.staproma.task;
 
 import java.util.Collection;
+import java.util.List;
 
 import de.japrost.staproma.TaskState;
 
@@ -19,7 +20,7 @@ import de.japrost.staproma.TaskState;
  * <p>
  * The content of the task is just a bunch of Strings that can be collected and returned.
  * </p>
- * 
+ *
  * @author alexxismachine (Ulrich David)
  */
 // TODO allow usage of an internal Iterator (eg, to do the distinction between
@@ -30,7 +31,7 @@ public interface Task extends Iterable<Task> {
 	/**
 	 * Tell if the task is in the asked status. A task is in a status if itself or one of the children is in that status.
 	 * If given status is {@code null} must return <code>true</code>.
-	 * 
+	 *
 	 * @param status the task state
 	 * @return <code>true</code> if the task is in the asked status.
 	 */
@@ -38,61 +39,68 @@ public interface Task extends Iterable<Task> {
 
 	/**
 	 * Add a child to the task. (??? Sets the parent of the added task to this???).
-	 * 
+	 *
 	 * @param task the task to add.
 	 */
 	void addChild(Task task);
 
 	/**
 	 * Get the tasks description.
-	 * 
+	 *
 	 * @return the description.
 	 */
 	String getDescription();
 
 	/**
 	 * Tell if there are children to the task.
-	 * 
+	 *
 	 * @return <code>true</code> if there are children.
 	 */
 	boolean hasChildren();
 
 	/**
 	 * Get the praent task.
-	 * 
+	 *
 	 * @return the parent task. <code>null</code> if there is no parent.
 	 */
 	Task getParent();
 
 	/**
 	 * Add a line to the content collection.
-	 * 
+	 *
 	 * @param line the line to add.
 	 */
 	void addContent(String line);
 
 	/**
 	 * Get the content collection.
-	 * 
+	 *
 	 * @return the content collection. MUST NOT be <code>null</code>. MAY be an unmodifiable collection.
 	 */
 	Collection<String> getContent();
 
 	/**
 	 * Get the priority, The lower the number the higher the priority.
-	 * 
+	 *
 	 * @return the priority. '0' if not specified.
 	 */
 	short getPriority();
+
+	/**
+	 * Get the priorities that this task and all the sub tasks are in.
+	 *
+	 * @return the priorities;
+	 */
+	List<Short> priorities();
 	/*
-	 * FIXME implement correct rendering 
+	 * FIXME implement correct rendering
 	 * /** Render this task into given writer
 	 * using its own representation.
-	 * 
+	 *
 	 * @param writer the writer to write to.
-	 * 
+	 *
 	 * @param level the level this task is supposed to be in.
-	 * 
+	 *
 	 * @throws IOException if writing to the writer failes. / void render(Writer
 	 * writer, int level) throws IOException;
 	 */

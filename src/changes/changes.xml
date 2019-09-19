@@ -6,7 +6,7 @@
     <release
       version="0.2.0"
       description="Priority filter"
-      date="TBD">
+      date="2019-09-19">
       <action type="add">
         Add filter by priority.
       </action>
