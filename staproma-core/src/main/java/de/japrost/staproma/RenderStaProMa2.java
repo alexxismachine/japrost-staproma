@@ -144,7 +144,15 @@ public class RenderStaProMa2 {
 	private void writeFile(final Task root, final StatusTaskHtmlRenderer stw, final String title, final TaskState status,
 			final String fileName) throws IOException {
 		StringWriter writer;
-		writer = new StringWriter();
+		writer = new StringWriter() {
+
+			@Override
+			public StringWriter append(final CharSequence csq) {
+				write(String.valueOf(csq));
+				write("\n");
+				return this;
+			}
+		};
 		writeHead(writer, title);
 		stw.render(root, status, writer);
 		writeFoot(writer);
@@ -158,6 +166,11 @@ public class RenderStaProMa2 {
 		writer.append("<title>" + title + "</title>");
 		writer.append("<link type='text/css' href='style.css' rel='stylesheet'/>");
 		writer.append("<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>");
+		writer.append("<style>");
+		for (int prio = 1; prio < 10; prio++) {
+			writePriorityStyle(writer, prio);
+		}
+		writer.append("</style>");
 		writer.append("</head>");
 		writer.append("<body>");
 		writer.append("<div class='navigation'>");
@@ -171,10 +184,36 @@ public class RenderStaProMa2 {
 		writer.append("<hr/>");
 		writer.append("<div class='title'>" + title + " Items</div>");
 		writer.append("<hr/>");
+		writer.append("<form>");
+		for (int prio = 1; prio < 10; prio++) {
+			writePriorityFrom(writer, prio);
+		}
+	}
+
+	private void writePriorityFrom(final StringWriter writer, final int prio) {
+		writer.append("<input type='checkbox' id='prio" + prio + "'" + (prio < 5 ? " checked" : "") + ">");
+		writer.append("<label class='priority" + prio + "' for='prio" + prio + "'>Prio " + prio + "</label>");
+	}
+
+	private void writePriorityStyle(final StringWriter writer, final int prio) {
+		writer.append(".priority" + prio + " {");
+		writer.append("  max-height: 0;");
+		writer.append("  overflow: hidden;");
+		writer.append("}");
+		writer.append("#prio" + prio + ":checked ~h2.priority" + prio + " {");
+		writer.append("  max-height: 100%;");
+		writer.append("}");
+		writer.append("#prio" + prio + ":checked ~h3.priority" + prio + " {");
+		writer.append("  max-height: 100%;");
+		writer.append("}");
+		writer.append("#prio" + prio + ":checked ~ul li.priority" + prio + " {");
+		writer.append("  max-height: 100%;");
+		writer.append("}");
 	}
 
 	private void writeFoot(final StringWriter writer) {
 		writer.append("<div class='generationTime'>" + new Date().toString() + "</div>");
+		writer.append("</form>");
 		writer.append("</body>");
 		writer.append("</html>");
 	}

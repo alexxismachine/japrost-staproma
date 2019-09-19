@@ -3,6 +3,14 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <body>
+      <release
+      version="0.2.0"
+      description="Priority filter"
+      date="TBD">
+      <action type="add">
+        Filter form for tasks.
+      </action>
+    </release>
     <release
       version="0.1.0"
       description="Java 11 and semantic versioning"
