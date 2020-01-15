@@ -8,6 +8,9 @@
       description="Order and style"
       date="TBA">
       <action type="add">
+        Tool for creating task from template and a task dir in reference material
+      </action>
+      <action type="add">
         Allows ordering of directory and include style.css.
       </action>
     </release>
