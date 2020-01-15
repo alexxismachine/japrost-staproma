@@ -3,12 +3,24 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <body>
-      <release
+    <release
+      version="0.3.0"
+      description="Order and style"
+      date="TBA">
+      <action type="add">
+        New pattern for directories that allows ordering.
+      </action>
+      <action type="add">
+        Including file style.css into page to have a single resource.
+      </action>
+    </release>
+    <release
       version="0.2.0"
       description="Priority filter"
       date="2019-09-19">
       <action type="add">
-        Priorites for container tasks and rendering to be filtered by priority form.
+        Priorites for container tasks and rendering to
+        be filtered by priority form.
       </action>
       <action type="add">
         Filter form for tasks by priority.
@@ -19,7 +31,8 @@
       description="Java 11 and semantic versioning"
       date="2019-08-27">
       <action type="update">
-        Use semantic versioning so this release becomes 0.1.0.
+        Use semantic versioning so this release
+        becomes 0.1.0.
       </action>
       <action type="update">
         Switch from docbooc to asiidoc.
@@ -33,10 +46,12 @@
       description="GTD-Files"
       date="2018-02-16">
       <action type="add">
-        Including and parsing of files for GTD additionaliy to Directories.
+        Including and parsing of files for GTD
+        additionaliy to Directories.
       </action>
       <action type="add">
-        Include and parse files with status waiting, schedule and someday.
+        Include and parse files with status waiting,
+        schedule and someday.
       </action>
     </release>
     <release
@@ -44,13 +59,15 @@
       description="priorities"
       date="2017-05-10">
       <action type="add">
-        Next steps (current items) with priority. Updated sample style.css.
+        Next steps (current items) with priority.
+        Updated sample style.css.
       </action>
       <action type="add">
         Rendering: css class for generation date.
       </action>
       <action type="fix">
-        Rendering: navigation div had wrong closing tag. Corrected title-css-class
+        Rendering: navigation div had wrong closing
+        tag. Corrected title-css-class
       </action>
       <action type="add">
         Started a todo page.
@@ -64,7 +81,8 @@
         Renderer links between pages.
       </action>
       <action type="add">
-        Renderer for scheduled tasks and syntetic 'today' task.
+        Renderer for scheduled tasks and syntetic
+        'today' task.
       </action>
       <action type="add">
         Use enum for states.

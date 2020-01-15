@@ -2,6 +2,7 @@ package de.japrost.staproma;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.StringWriter;
@@ -170,6 +171,7 @@ public class RenderStaProMa2 {
 		for (int prio = 1; prio < 10; prio++) {
 			writePriorityStyle(writer, prio);
 		}
+		includeStyle(writer);
 		writer.append("</style>");
 		writer.append("</head>");
 		writer.append("<body>");
@@ -226,6 +228,19 @@ public class RenderStaProMa2 {
 
 	private void writeFile(final String fileName, final String content) throws IOException {
 		FileUtils.write(new File(outDir, fileName), content);
+	}
+
+	private void includeStyle(final StringWriter writer) {
+		InputStream in = this.getClass().getResourceAsStream("/style.css");
+		if (in != null) {
+			try {
+				writer.append(new String(in.readAllBytes()));
+			} catch (IOException e) {
+				writer.append("<!-- style.css not readable -->");
+			}
+		} else {
+			writer.append("<!-- style.css not found -->");
+		}
 	}
 
 	private void copyStyle() throws IOException {

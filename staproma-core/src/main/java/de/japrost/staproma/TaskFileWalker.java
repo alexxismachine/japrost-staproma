@@ -42,6 +42,7 @@ public class TaskFileWalker extends DirectoryWalker<String> {
 	private static final Pattern MINMAL_DIR_PATTERN = Pattern.compile("^([A-Z]*)$");
 	private static final Pattern NUMBER_DIR_PATTERN = Pattern.compile("^([A-Z]*)-(\\d*)$");
 	private static final Pattern NAME_DIR_PATTERN = Pattern.compile("^([A-Z]*)_(.*$)");
+	private static final Pattern ORDER_NAME_DIR_PATTERN = Pattern.compile("^(\\d*)_([A-Z]*)_(.*$)");
 	private static final Pattern FULL_DIR_PATTERN = Pattern.compile("^([A-Z]*)-(\\d*)_(.*$)");
 	// (X*)
 	// (X*)_(*)
@@ -112,23 +113,28 @@ public class TaskFileWalker extends DirectoryWalker<String> {
 			boolean match = false;
 			// TODO faster
 			Matcher matcher = MINMAL_DIR_PATTERN.matcher(dirName);
-			if (matcher.matches()) {
+			if (!match && matcher.matches()) {
 				match = true;
 				// keep description
 			}
 			matcher = NUMBER_DIR_PATTERN.matcher(dirName);
-			if (matcher.matches()) {
+			if (!match && matcher.matches()) {
 				match = true;
 				// keep description
 			}
 			matcher = NAME_DIR_PATTERN.matcher(dirName);
-			if (matcher.matches()) {
+			if (!match && matcher.matches()) {
 				match = true;
 				//description = matcher.group(1) + " " + matcher.group(2).replace('_', ' ');
 				description = matcher.group(2).replace('_', ' ');
 			}
+			matcher = ORDER_NAME_DIR_PATTERN.matcher(dirName);
+			if (!match && matcher.matches()) {
+				match = true;
+				description = matcher.group(3).replace('_', ' ');
+			}
 			matcher = FULL_DIR_PATTERN.matcher(dirName);
-			if (matcher.matches()) {
+			if (!match && matcher.matches()) {
 				match = true;
 				description = matcher.group(1) + "-" + matcher.group(2) + " " + matcher.group(3).replace('_', ' ');
 			}

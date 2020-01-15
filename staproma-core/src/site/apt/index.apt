@@ -42,5 +42,12 @@ StaProMa - core
     
   Verzeichnisse werden nur in Betracht gezogen, wenn sie den folgenden Formaten entsprechen:
   
-    * <<<^([A-Z]+)-(\d+)_(.*$)>>> Verzeichnis mit Aufgaben
-      
+    * <<<^([A-Z]*)-(\d*)>>> z.B.: <<<ORGA-001>>> als Verzeichnis mit einer Aufgabe
+    
+    * <<<^([A-Z]*)$>>> z.B.: <<<ORGA>>> als Verzeichnis mit Aufgaben
+
+    * <<<^([A-Z]*)_(.*)$>>> z.B.: <<<ORGA_Organisation>>> als Verzeichnis mit Aufgaben
+
+    * <<<^(\d*)_([A-Z]*)_(.*$)>>> z.B.: <<<01_ORGA_Organisation>>> als Verzeichnis mit Aufgaben.
+    Über die vorangestellte Zahl lässt sich eine Sortierung abbilden.
+

@@ -4,6 +4,14 @@
   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <body>
     <release
+      version="0.3.0"
+      description="Order and style"
+      date="TBA">
+      <action type="add">
+        Allows ordering of directory and include style.css.
+      </action>
+    </release>
+    <release
       version="0.2.0"
       description="Priority filter"
       date="2019-09-19">
