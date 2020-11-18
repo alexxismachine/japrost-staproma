@@ -1,3 +1,10 @@
 = Core Components
 
-some dummy text
+== RenderStaProMa2
+
+Main class...
+
+Uses old different file filters as well as new spm filter.
+
+include::../../src/main/java/de/japrost/staproma/FileFilters.java[tags=filters]
+

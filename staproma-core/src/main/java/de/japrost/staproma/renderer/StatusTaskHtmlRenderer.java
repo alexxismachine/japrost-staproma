@@ -17,31 +17,41 @@ import de.japrost.staproma.task.Task;
  */
 public class StatusTaskHtmlRenderer {
 
+	private final Task root;
+	private final Writer writer;
+	private final TaskState taskState;
+
+	public StatusTaskHtmlRenderer(final Task root, final TaskState taskState, final Writer writer) {
+		this.root = root;
+		this.writer = writer;
+		this.taskState = taskState;
+	}
+
 	/**
 	 * Do the rendering of the given task with its subtasks in status to the writer.
 	 *
 	 * @param root the root task to start rendering from. MUST NOT be {@code null}.
-	 * @param status the status tasks must be in for rendering.
+	 * @param taskState the status tasks must be in for rendering.
 	 * @param writer the writer to render to. MUST NOT be {@code null}.
 	 * @throws IOException on io failures on the writer.
 	 */
-	public void render(final Task root, final TaskState status, final Writer writer) throws IOException {
+	public void render() throws IOException {
 		//TODO writer and status as instance variables
-		walkSubTree(root, 0, new RenderState(), status, writer);
+		walkSubTree(root, 0, new RenderState(), writer);
 	}
 
-	private void walkSubTree(final Task task, final int level, final RenderState renderState, final TaskState status,
+	private void walkSubTree(final Task task, final int level, final RenderState renderState,
 			final Writer writer)
 			throws IOException {
 		int myLevel = level + 1;
-		if (task.isInState(status)) {
+		if (task.isInState(taskState)) {
 			if (level > 0) {
 				// do not print root task
 				printTask(task, level, renderState, writer);
 			}
 			RenderState localRenderState = new RenderState();
 			for (Task subTask : task) {
-				walkSubTree(subTask, myLevel, localRenderState, status, writer);
+				walkSubTree(subTask, myLevel, localRenderState, writer);
 			}
 			if (localRenderState.openul) {
 				writer.append("</ul>\n");
