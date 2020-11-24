@@ -1,12 +1,13 @@
 package de.japrost.staproma.renderer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.DirectoryTask;
@@ -19,7 +20,7 @@ import de.japrost.staproma.task.Task;
  *
  * @author alexxismachine (Ulrich David)
  */
-public class TestStatusTaskHtmlRenderer {
+class TestStatusTaskHtmlRenderer {
 
 	private StatusTaskHtmlRenderer cut;
 	private Writer writer;
@@ -28,8 +29,8 @@ public class TestStatusTaskHtmlRenderer {
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		root = new FolderTask(null, "ROOT");
 		writer = new StringWriter();
 	}
@@ -40,9 +41,9 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderEmptyData() throws IOException {
+	void renderEmptyData() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
-		Assert.assertEquals("", writer.toString());
+		assertEquals("", writer.toString());
 	}
 
 	/**
@@ -51,11 +52,11 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderFirstLevel() throws IOException {
+	void renderFirstLevel() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
 		root.addChild(new FolderTask(root, "subTask"));
 		cut.render();
-		Assert.assertEquals("<h1>subTask</h1>\n", writer.toString());
+		assertEquals("<h1>subTask</h1>\n", writer.toString());
 	}
 
 	/**
@@ -64,14 +65,14 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderTwoLevels() throws IOException {
+	void renderTwoLevels() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
 		FolderTask subTask = new FolderTask(root, "subTask");
 		root.addChild(subTask);
 		FolderTask subSubTask = new FolderTask(root, "subSubTask");
 		subTask.addChild(subSubTask);
 		cut.render();
-		Assert.assertEquals("<h1>subTask</h1>\n<h2>subSubTask</h2>\n", writer.toString());
+		assertEquals("<h1>subTask</h1>\n<h2>subSubTask</h2>\n", writer.toString());
 	}
 
 	/**
@@ -80,14 +81,14 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderLeafTask() throws IOException {
+	void renderLeafTask() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
 		Task subTask = new FolderTask(root, "subTask");
 		root.addChild(subTask);
 		Task subSubTask = new LeafTask(root, "subSubTask");
 		subTask.addChild(subSubTask);
 		cut.render();
-		Assert.assertEquals("<h1>subTask</h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n", writer.toString());
+		assertEquals("<h1>subTask</h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n", writer.toString());
 	}
 
 	/**
@@ -96,14 +97,14 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderLeafTaskInDirectoryTask() throws IOException {
+	void renderLeafTaskInDirectoryTask() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
 		Task subTask = new DirectoryTask(root, "path", "subTask");
 		root.addChild(subTask);
 		Task subSubTask = new LeafTask(root, "subSubTask");
 		subTask.addChild(subSubTask);
 		cut.render();
-		Assert.assertEquals("<h1><a href='path'>subTask</a></h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n",
+		assertEquals("<h1><a href='path'>subTask</a></h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n",
 				writer.toString());
 	}
 
@@ -113,7 +114,7 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderMultipleLeafTasks() throws IOException {
+	void renderMultipleLeafTasks() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
 		Task subTask = new DirectoryTask(root, "path", "subTask");
 		root.addChild(subTask);
@@ -121,9 +122,8 @@ public class TestStatusTaskHtmlRenderer {
 		subTask.addChild(subSubTask);
 		Task subSubTask2 = new LeafTask(root, "subSubTask2");
 		subTask.addChild(subSubTask2);
-		TaskState status = null;
 		cut.render();
-		Assert.assertEquals(
+		assertEquals(
 				"<h1><a href='path'>subTask</a></h1>\n<ul>\n  <li>subSubTask</li>\n  <li>subSubTask2</li>\n</ul>\n",
 				writer.toString());
 	}
@@ -134,7 +134,7 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderLeafTaskAfterFolderTask() throws IOException {
+	void renderLeafTaskAfterFolderTask() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
 		Task subTask = new DirectoryTask(root, "path", "subTask");
 		root.addChild(subTask);
@@ -143,7 +143,7 @@ public class TestStatusTaskHtmlRenderer {
 		Task subSubTask2 = new LeafTask(root, "subSubTask2");
 		subTask.addChild(subSubTask2);
 		cut.render();
-		Assert.assertEquals(
+		assertEquals(
 				"<h1><a href='path'>subTask</a></h1>\n<h2>subSubTask</h2>\n<h2>WEITERES</h2>\n<ul>\n  <li>subSubTask2</li>\n</ul>\n",
 				writer.toString());
 	}
@@ -154,7 +154,7 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderAutocloseLeafTask() throws IOException {
+	void renderAutocloseLeafTask() throws IOException {
 		cut = new StatusTaskHtmlRenderer(root, null, writer);
 		Task subTask = new DirectoryTask(root, "path", "subTask");
 		root.addChild(subTask);
@@ -163,7 +163,7 @@ public class TestStatusTaskHtmlRenderer {
 		Task subSubTask2 = new FolderTask(root, "subSubTask2");
 		subTask.addChild(subSubTask2);
 		cut.render();
-		Assert.assertEquals(
+		assertEquals(
 				"<h1><a href='path'>subTask</a></h1>\n<ul>\n  <li>subSubTask</li>\n</ul>\n<h2>subSubTask2</h2>\n",
 				writer.toString());
 	}
@@ -174,10 +174,10 @@ public class TestStatusTaskHtmlRenderer {
 	 * @throws IOException on io failure (never in test).
 	 */
 	@Test
-	public void renderIgnoresWrongState() throws IOException {
+	void renderIgnoresWrongState() throws IOException {
 		TaskState status = TaskState.SOMEDAY;
 		cut = new StatusTaskHtmlRenderer(root, status, writer);
 		root.addChild(new FolderTask(root, "subTask"));
-		Assert.assertEquals("", writer.toString());
+		assertEquals("", writer.toString());
 	}
 }

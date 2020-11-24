@@ -3,47 +3,40 @@ package de.japrost.staproma;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the main class.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestRenderStaProMa2 {
+class TestRenderStaProMa2 {
+
 	/**
-	 * Set up each test.
+	 * test.
+	 *
+	 * @throws IOException on io failure.
 	 */
-	@Before
-	public void setUp() {
+	@Test
+	void noReallyATest() throws IOException {
+		File outDir = new File("target/", "renderDir");
+		outDir.mkdirs();
+		RenderStaProMa2
+				.main(new String[] { new File("src/test/resources", "renderDir").getAbsolutePath(), outDir.getAbsolutePath() });
+		//FIXME assert file contents?
 	}
 
 	/**
 	 * test.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	@Test
-	public void noReallyATest() throws IOException {
-		File outDir = new File("target/", "renderDir");
-		outDir.mkdirs();
-		RenderStaProMa2.main(new String[] { new File("src/test/resources", "renderDir").getAbsolutePath(),outDir.getAbsolutePath() });
-		//FIXME assert file contents?
-	}
-	/**
-	 * test.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
-	 */
-	@Test
-	public void renderMixedContent() throws IOException {
+	void renderMixedContent() throws IOException {
 		File outDir = new File("target/", "mixContent");
 		outDir.mkdirs();
-		RenderStaProMa2.main(new String[] { new File("src/test/resources", "mixFlatAndDirectoryTasks").getAbsolutePath(),outDir.getAbsolutePath() });
+		RenderStaProMa2.main(new String[] { new File("src/test/resources", "mixFlatAndDirectoryTasks").getAbsolutePath(),
+				outDir.getAbsolutePath() });
 		//FIXME assert file contents?
 	}
 }

@@ -3,9 +3,9 @@ package de.japrost.staproma;
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +15,9 @@ import java.util.List;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.easymock.EasyMockSupport;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.japrost.staproma.spm.SpmFormat;
 import de.japrost.staproma.spm.SpmFormatFactory;
@@ -27,11 +27,11 @@ import de.japrost.staproma.task.Task;
 
 /**
  * Test the {@link TaskFileWalker}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestTaskFileWalker {
+class TestTaskFileWalker {
+
 	private static final String TEST_BASE_DIR = "target/test-classes";
 	private TaskFileWalker cut;
 	private EasyMockSupport ems;
@@ -43,28 +43,27 @@ public class TestTaskFileWalker {
 	/**
 	 * Setup whole test
 	 */
-	@BeforeClass
-	public static void init() {
+	@BeforeAll
+	static void init() {
 		// set up empty dir structure
-		new File(TEST_BASE_DIR,"completedBaseDir/ACTIVE").mkdirs();
-		new File(TEST_BASE_DIR,"completedBaseDir/LAST").mkdirs();
-		new File(TEST_BASE_DIR,"emptyBaseDir").mkdirs();
-		new File(TEST_BASE_DIR,"patternBaseDir/FULL-15_withName").mkdirs();
-		new File(TEST_BASE_DIR,"patternBaseDir/IGNORED-DIR").mkdirs();
-		new File(TEST_BASE_DIR,"patternBaseDir/NUMBERDIR-42").mkdirs();
-		new File(TEST_BASE_DIR,"patternBaseDir/MINIMAL").mkdirs();
-		new File(TEST_BASE_DIR,"patternBaseDir/NAMEDIR_theName").mkdirs();
-		new File(TEST_BASE_DIR,"patternBaseDir/NAMEDIR_theName").mkdirs();
-		new File(TEST_BASE_DIR,"treeBaseDir/SUB-1/SUB-1_SUB-1").mkdirs();
-		new File(TEST_BASE_DIR,"treeBaseDir/SUB-2").mkdirs();
+		new File(TEST_BASE_DIR, "completedBaseDir/ACTIVE").mkdirs();
+		new File(TEST_BASE_DIR, "completedBaseDir/LAST").mkdirs();
+		new File(TEST_BASE_DIR, "emptyBaseDir").mkdirs();
+		new File(TEST_BASE_DIR, "patternBaseDir/FULL-15_withName").mkdirs();
+		new File(TEST_BASE_DIR, "patternBaseDir/IGNORED-DIR").mkdirs();
+		new File(TEST_BASE_DIR, "patternBaseDir/NUMBERDIR-42").mkdirs();
+		new File(TEST_BASE_DIR, "patternBaseDir/MINIMAL").mkdirs();
+		new File(TEST_BASE_DIR, "patternBaseDir/NAMEDIR_theName").mkdirs();
+		new File(TEST_BASE_DIR, "patternBaseDir/NAMEDIR_theName").mkdirs();
+		new File(TEST_BASE_DIR, "treeBaseDir/SUB-1/SUB-1_SUB-1").mkdirs();
+		new File(TEST_BASE_DIR, "treeBaseDir/SUB-2").mkdirs();
 	}
-	
+
 	/**
 	 * Set up each test.
-	 * 
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		ems = new EasyMockSupport();
 		rootTask = new FolderTask(null, "ROOT");
 		spmFormatFactoryMock = ems.createMock(SpmFormatFactory.class);
@@ -72,24 +71,23 @@ public class TestTaskFileWalker {
 		ioFileFilter = FileFilterUtils.fileFileFilter();
 	}
 
-	private TaskFileWalker setUpWithBaseDir(File baseDir) {
+	private TaskFileWalker setUpWithBaseDir(final File baseDir) {
 		baseDir.mkdirs();
 		System.out.println(baseDir.getAbsolutePath());
 		return new TaskFileWalker(rootTask, baseDir, ioFileFilter, spmFormatFactoryMock, true);
 	}
 
-	private TaskFileWalker setUpWithBaseDirNotFilter(File baseDir) {
+	private TaskFileWalker setUpWithBaseDirNotFilter(final File baseDir) {
 		return new TaskFileWalker(rootTask, baseDir, ioFileFilter, spmFormatFactoryMock, false);
 	}
 
 	/**
 	 * Empty dir creates emtpty ROOT.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	@Test
-	public void handleEmptyDir() throws IOException {
+	void handleEmptyDir() throws IOException {
 		cut = setUpWithBaseDir(new File(TEST_BASE_DIR, "emptyBaseDir"));
 		ems.replayAll();
 		cut.crawl();
@@ -99,13 +97,12 @@ public class TestTaskFileWalker {
 
 	/**
 	 * Test handling all the dir patterns.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	// TODO use separate tests for each pattern?
 	@Test
-	public void handleDirPatterns() throws IOException {
+	void handleDirPatterns() throws IOException {
 		cut = setUpWithBaseDir(new File(TEST_BASE_DIR, "patternBaseDir"));
 		ems.replayAll();
 		cut.crawl();
@@ -143,13 +140,12 @@ public class TestTaskFileWalker {
 
 	/**
 	 * handle a file (do not mind contents).
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	public void handleAFile() throws IOException {
+	void handleAFile() throws IOException {
 		cut = setUpWithBaseDir(new File(TEST_BASE_DIR, "fileBaseDir"));
 		expect(spmFormatFactoryMock.construct("CURRENT")).andReturn(spmFormatMock);
 		spmFormatMock.parseLines(eq(rootTask), anyObject(List.class));
@@ -164,12 +160,11 @@ public class TestTaskFileWalker {
 
 	/**
 	 * handle sub and super directories. Also check path component.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	@Test
-	public void handleDownAndUp() throws IOException {
+	void handleDownAndUp() throws IOException {
 		cut = setUpWithBaseDir(new File(TEST_BASE_DIR, "treeBaseDir"));
 		ems.replayAll();
 		cut.crawl();
@@ -188,12 +183,11 @@ public class TestTaskFileWalker {
 
 	/**
 	 * ignore completed directories.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	@Test
-	public void ignoreCompleted() throws IOException {
+	void ignoreCompleted() throws IOException {
 		cut = setUpWithBaseDir(new File(TEST_BASE_DIR, "completedBaseDir"));
 		ems.replayAll();
 		cut.crawl();
@@ -208,13 +202,12 @@ public class TestTaskFileWalker {
 
 	/**
 	 * use completed directories.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	public void useCompleted() throws IOException {
+	void useCompleted() throws IOException {
 		cut = setUpWithBaseDirNotFilter(new File(TEST_BASE_DIR, "completedBaseDir"));
 		expect(spmFormatFactoryMock.construct("COMPLETED")).andReturn(spmFormatMock);
 		spmFormatMock.parseLines(anyObject(Task.class), anyObject(List.class));
@@ -233,12 +226,11 @@ public class TestTaskFileWalker {
 
 	/**
 	 * Empty dir creates emtpty ROOT.
-	 * 
-	 * @throws IOException
-	 *             on io failure.
+	 *
+	 * @throws IOException on io failure.
 	 */
 	@Test
-	public void handleOtherConstructor() throws IOException {
+	void handleOtherConstructor() throws IOException {
 		cut = new TaskFileWalker(rootTask, new File(TEST_BASE_DIR, "emptyBaseDir"), ioFileFilter);
 		ems.replayAll();
 		cut.crawl();

@@ -1,15 +1,15 @@
 package de.japrost.staproma.spm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.japrost.staproma.TaskState;
 import de.japrost.staproma.task.AnonymousTask;
@@ -17,18 +17,18 @@ import de.japrost.staproma.task.Task;
 
 /**
  * Test the {@link GtdSpmFormat}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestGtdSpmFormat {
+class TestGtdSpmFormat {
+
 	private GtdSpmFormat cut;
 
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		cut = new GtdSpmFormat();
 	}
 
@@ -36,8 +36,8 @@ public class TestGtdSpmFormat {
 	 * Parsing empty lines does no harm.
 	 */
 	@Test
-	public void parseEmptyLines() {
-		List<String> lines = new ArrayList<String>();
+	void parseEmptyLines() {
+		List<String> lines = new ArrayList<>();
 		Task result = cut.parseLines(lines);
 		assertFalse(result.hasChildren());
 	}
@@ -46,8 +46,8 @@ public class TestGtdSpmFormat {
 	 * Basic topic parse test.
 	 */
 	@Test
-	public void parseSingleTopicLine() {
-		List<String> lines = new ArrayList<String>();
+	void parseSingleTopicLine() {
+		List<String> lines = new ArrayList<>();
 		lines.add("# First Topic");
 		Task result = cut.parseLines(lines);
 		assertEquals("First Topic", result.iterator().next().getDescription());
@@ -57,8 +57,8 @@ public class TestGtdSpmFormat {
 	 * Lines at same level go to same level.
 	 */
 	@Test
-	public void parse2TopicLinesOnSameLevel() {
-		List<String> lines = new ArrayList<String>();
+	void parse2TopicLinesOnSameLevel() {
+		List<String> lines = new ArrayList<>();
 		lines.add("# First Topic");
 		lines.add("# Second Topic");
 		Task result = cut.parseLines(lines);
@@ -71,8 +71,8 @@ public class TestGtdSpmFormat {
 	 * Lines at different level create hierarchie.
 	 */
 	@Test
-	public void parseTopicAndSubTopic() {
-		List<String> lines = new ArrayList<String>();
+	void parseTopicAndSubTopic() {
+		List<String> lines = new ArrayList<>();
 		lines.add("# First Topic");
 		lines.add("## Sub-Topic");
 		Task result = cut.parseLines(lines);
@@ -86,8 +86,8 @@ public class TestGtdSpmFormat {
 	 * Levels going up an down are representd in hierarachie.
 	 */
 	@Test
-	public void parseTopicLevelDownAndUp() {
-		List<String> lines = new ArrayList<String>();
+	void parseTopicLevelDownAndUp() {
+		List<String> lines = new ArrayList<>();
 		lines.add("# First Topic");
 		lines.add("## Sub-Topic1");
 		lines.add("# Second Topic");
@@ -106,10 +106,10 @@ public class TestGtdSpmFormat {
 	 * Missing level going down the hierarchie is filled up with an intermediate task.
 	 */
 	@Test
-	public void parseTopicLevelAdjustmentDown() {
-		List<String> lines = new ArrayList<String>();
+	void parseTopicLevelAdjustmentDown() {
+		List<String> lines = new ArrayList<>();
 		lines.add("# First Topic");
-		// ## intermediate topic 
+		// ## intermediate topic
 		lines.add("### Sub-Sub-Topic1");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> iterator = result.iterator();
@@ -125,12 +125,12 @@ public class TestGtdSpmFormat {
 	 * Missiong level going up the hierarchie leads to addtion to higher task.
 	 */
 	@Test
-	public void parseTopicLevelAdjustmentUp() {
-		List<String> lines = new ArrayList<String>();
+	void parseTopicLevelAdjustmentUp() {
+		List<String> lines = new ArrayList<>();
 		lines.add("# First Topic");
 		lines.add("## Sub-Topic1");
 		lines.add("### Sub-Sub-Topic1");
-		// no intermediate topic required 
+		// no intermediate topic required
 		lines.add("# Second Topic");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -150,8 +150,8 @@ public class TestGtdSpmFormat {
 	 * Base parsing a invalid action.
 	 */
 	@Test
-	public void parseInvalidAction() {
-		List<String> lines = new ArrayList<String>();
+	void parseInvalidAction() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (\f) invalid");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -164,24 +164,24 @@ public class TestGtdSpmFormat {
 	 * Base parsing a current action.
 	 */
 	@Test
-	public void parseCurrentAction() {
-		List<String> lines = new ArrayList<String>();
+	void parseCurrentAction() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (!) current");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("current", firstAction.getDescription());
 		assertTrue(firstAction.isInState(TaskState.CURRENT));
-		assertEquals(1,firstAction.getPriority());
-		
+		assertEquals(1, firstAction.getPriority());
+
 	}
 
 	/**
 	 * Base parsing a schedule action.
 	 */
 	@Test
-	public void parseScheduleAction() {
-		List<String> lines = new ArrayList<String>();
+	void parseScheduleAction() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (@) schedule");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -194,8 +194,8 @@ public class TestGtdSpmFormat {
 	 * Base parsing a done action.
 	 */
 	@Test
-	public void parseDoneAction() {
-		List<String> lines = new ArrayList<String>();
+	void parseDoneAction() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (/) done");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -208,8 +208,8 @@ public class TestGtdSpmFormat {
 	 * Base parsing a someday action.
 	 */
 	@Test
-	public void parseSomedayAction() {
-		List<String> lines = new ArrayList<String>();
+	void parseSomedayAction() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (?) someday");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -222,8 +222,8 @@ public class TestGtdSpmFormat {
 	 * Base parsing a future action.
 	 */
 	@Test
-	public void parseFutureAction() {
-		List<String> lines = new ArrayList<String>();
+	void parseFutureAction() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (#) future");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -236,8 +236,8 @@ public class TestGtdSpmFormat {
 	 * Base parsing a waiting action.
 	 */
 	@Test
-	public void parseWaitingAction() {
-		List<String> lines = new ArrayList<String>();
+	void parseWaitingAction() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (:) waiting");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -250,23 +250,23 @@ public class TestGtdSpmFormat {
 	 * Base parsing a priority action.
 	 */
 	@Test
-	public void parsePriorityAction4() {
-		List<String> lines = new ArrayList<String>();
+	void parsePriorityAction4() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (4) prio 4");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
 		Task firstAction = rootIterator.next();
 		assertEquals("prio 4", firstAction.getDescription());
 		assertTrue(firstAction.isInState(TaskState.CURRENT));
-		assertEquals(4,firstAction.getPriority());
+		assertEquals(4, firstAction.getPriority());
 	}
 
 	/**
 	 * Action lines without symbol are parsed as current action.
 	 */
 	@Test
-	public void parseMissingActionIsCurrent() {
-		List<String> lines = new ArrayList<String>();
+	void parseMissingActionIsCurrent() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* missing (in) action");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -279,8 +279,8 @@ public class TestGtdSpmFormat {
 	 * Action lines with unknown symbol are parsed as current action.
 	 */
 	@Test
-	public void parseUnknownActionIsCurrent() {
-		List<String> lines = new ArrayList<String>();
+	void parseUnknownActionIsCurrent() {
+		List<String> lines = new ArrayList<>();
 		lines.add("* (+) unknown action");
 		Task result = cut.parseLines(lines);
 		Iterator<Task> rootIterator = result.iterator();
@@ -294,8 +294,8 @@ public class TestGtdSpmFormat {
 	 * This IS subject to change.
 	 */
 	@Test
-	public void parseContentBeforeFirstTask() {
-		List<String> lines = new ArrayList<String>();
+	void parseContentBeforeFirstTask() {
+		List<String> lines = new ArrayList<>();
 		lines.add("some content");
 		Task result = cut.parseLines(lines);
 		// IST:
@@ -312,8 +312,8 @@ public class TestGtdSpmFormat {
 	 * Content lines are parsed to current task.
 	 */
 	@Test
-	public void parseContentToTask() {
-		List<String> lines = new ArrayList<String>();
+	void parseContentToTask() {
+		List<String> lines = new ArrayList<>();
 		lines.add("# First Topic");
 		lines.add("some content");
 		Task result = cut.parseLines(lines);

@@ -1,23 +1,24 @@
 package de.japrost.staproma.task;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the {@link AnonymousTask}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestAnonymousTask {
-	AnonymousTask cut;
+class TestAnonymousTask {
+
+	private AnonymousTask cut;
 
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		cut = new AnonymousTask(null);
 	}
 
@@ -25,7 +26,7 @@ public class TestAnonymousTask {
 	 * {@link AnonymousTask} has a default description.
 	 */
 	@Test
-	public void defaultDescription() {
-		Assert.assertEquals("N/A", cut.getDescription());
+	void defaultDescription() {
+		assertEquals("N/A", cut.getDescription());
 	}
 }

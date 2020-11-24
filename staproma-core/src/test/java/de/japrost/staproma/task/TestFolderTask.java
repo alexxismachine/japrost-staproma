@@ -1,25 +1,25 @@
 package de.japrost.staproma.task;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the {@link FolderTask}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestFolderTask {
+class TestFolderTask {
+
 	private FolderTask cut;
 	private Task parentTask;
 
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		cut = new FolderTask(parentTask, "The folder task.");
 	}
 
@@ -27,7 +27,7 @@ public class TestFolderTask {
 	 * Test if the constructor values get assigned.
 	 */
 	@Test
-	public void getConstructorAssignments() {
+	void getConstructorAssignments() {
 		assertEquals("The folder task.", cut.getDescription());
 		assertEquals(parentTask, cut.getParent());
 	}

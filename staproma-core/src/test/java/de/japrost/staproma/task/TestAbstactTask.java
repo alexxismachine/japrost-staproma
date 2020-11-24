@@ -1,29 +1,29 @@
 /**
- * 
+ *
  */
 package de.japrost.staproma.task;
 
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
 import org.easymock.EasyMockSupport;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.japrost.staproma.TaskState;
 
 /**
  * Test the {@link AbstactTask}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestAbstactTask {
+class TestAbstactTask {
+
 	private AbstactTask cut;
 	private EasyMockSupport ems;
 	private Task parentTask;
@@ -32,8 +32,8 @@ public class TestAbstactTask {
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		ems = new EasyMockSupport();
 		parentTask = new AnonymousTask(null);
 		cut = new AbstactTask(parentTask, "The root task") {
@@ -45,7 +45,7 @@ public class TestAbstactTask {
 	 * Test if the constructor values get assigned.
 	 */
 	@Test
-	public void getConstructorAssignments() {
+	void getConstructorAssignments() {
 		assertEquals("The root task", cut.getDescription());
 		assertEquals(parentTask, cut.getParent());
 	}
@@ -54,7 +54,7 @@ public class TestAbstactTask {
 	 * Test setting the state.
 	 */
 	@Test
-	public void setState() {
+	void setState() {
 		assertFalse(cut.isInState(TaskState.CURRENT));
 		cut.setState(TaskState.CURRENT);
 		assertTrue(cut.isInState(TaskState.CURRENT));
@@ -64,7 +64,7 @@ public class TestAbstactTask {
 	 * Abstract task has no own state initially.
 	 */
 	@Test
-	public void isInFalseStateByDefault() {
+	void isInFalseStateByDefault() {
 		assertFalse(cut.isInState(TaskState.CURRENT));
 	}
 
@@ -72,7 +72,7 @@ public class TestAbstactTask {
 	 * Tasks must return {@code true} on {@code null} input.
 	 */
 	@Test
-	public void tasksAreInNullState() {
+	void tasksAreInNullState() {
 		cut.setState(TaskState.CURRENT);
 		assertTrue(cut.isInState(null));
 	}
@@ -81,7 +81,7 @@ public class TestAbstactTask {
 	 * Abstract task returns own state before asking children.
 	 */
 	@Test
-	public void ownStateBeforeChildState() {
+	void ownStateBeforeChildState() {
 		// taskMock is not called.
 		ems.replayAll();
 		cut.setState(TaskState.CURRENT);
@@ -94,7 +94,7 @@ public class TestAbstactTask {
 	 * Abstract task asks children if own state does not match.
 	 */
 	@Test
-	public void childStateIfNotOwnState() {
+	void childStateIfNotOwnState() {
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(true);
 		ems.replayAll();
@@ -109,7 +109,7 @@ public class TestAbstactTask {
 	 * Abstract task implements iterable on children.
 	 */
 	@Test
-	public void implementsIterableOnSubTasks() {
+	void implementsIterableOnSubTasks() {
 		ems.replayAll();
 		cut.setState(TaskState.CURRENT);
 		cut.addChild(taskMock);
@@ -127,7 +127,7 @@ public class TestAbstactTask {
 	 * Abstract has no children initially.
 	 */
 	@Test
-	public void noChildInitially() {
+	void noChildInitially() {
 		assertFalse(cut.hasChildren());
 	}
 
@@ -135,7 +135,7 @@ public class TestAbstactTask {
 	 * Abstract tells to have children.
 	 */
 	@Test
-	public void iHaveAChild() {
+	void iHaveAChild() {
 		ems.replayAll();
 		cut.addChild(taskMock);
 		ems.verifyAll();
@@ -146,7 +146,7 @@ public class TestAbstactTask {
 	 * No content initially.
 	 */
 	@Test
-	public void noContentInitially() {
+	void noContentInitially() {
 		assertEquals(0, cut.getContent().size());
 	}
 
@@ -154,7 +154,7 @@ public class TestAbstactTask {
 	 * content just stored.
 	 */
 	@Test
-	public void storeContent() {
+	void storeContent() {
 		cut.addContent("first line");
 		cut.addContent(null);
 		cut.addContent("");

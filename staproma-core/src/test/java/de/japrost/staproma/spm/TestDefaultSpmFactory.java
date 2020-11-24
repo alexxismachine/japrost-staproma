@@ -1,25 +1,27 @@
 package de.japrost.staproma.spm;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.japrost.staproma.TaskState;
 
 /**
  * Test the {@link DefaultSpmFactory}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestDefaultSpmFactory {
-	DefaultSpmFactory cut;
+class TestDefaultSpmFactory {
+
+	private DefaultSpmFactory cut;
 
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		cut = new DefaultSpmFactory();
 	}
 
@@ -27,26 +29,26 @@ public class TestDefaultSpmFactory {
 	 * Do not fail on null input.
 	 */
 	@Test
-	public void constructIsNullSave() {
+	void constructIsNullSave() {
 		SpmFormat actual = cut.construct(null);
-		Assert.assertNotNull(actual);
+		assertNotNull(actual);
 	}
 
 	/**
 	 * Return a SimpleSpmFormat.
 	 */
 	@Test
-	public void constructSimple() {
+	void constructSimple() {
 		SpmFormat actual = cut.construct(TaskState.CURRENT.name());
-		Assert.assertTrue(actual instanceof SimpleSpmFormat);
+		assertTrue(actual instanceof SimpleSpmFormat);
 	}
 
 	/**
 	 * Return a SimpleSpmFormat.
 	 */
 	@Test
-	public void constructGTD() {
+	void constructGTD() {
 		SpmFormat actual = cut.construct("GTD");
-		Assert.assertTrue(actual instanceof GtdSpmFormat);
+		assertTrue(actual instanceof GtdSpmFormat);
 	}
 }

@@ -1,23 +1,23 @@
 package de.japrost.staproma.task;
 
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.easymock.EasyMockSupport;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.japrost.staproma.TaskState;
 
 /**
  * Test the {@link DirectoryTask}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestDirectoryTask {
+class TestDirectoryTask {
+
 	private DirectoryTask cut;
 	private EasyMockSupport ems;
 	private Task parentTask;
@@ -26,8 +26,8 @@ public class TestDirectoryTask {
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		ems = new EasyMockSupport();
 		parentTask = new AnonymousTask(null);
 		cut = new DirectoryTask(parentTask, "path/name", "The directory task");
@@ -38,7 +38,7 @@ public class TestDirectoryTask {
 	 * Test if the constructor values get assigned.
 	 */
 	@Test
-	public void getConstructorAssignments() {
+	void getConstructorAssignments() {
 		assertEquals("The directory task", cut.getDescription());
 		assertEquals(parentTask, cut.getParent());
 		assertEquals("path/name", cut.getPath());
@@ -48,7 +48,7 @@ public class TestDirectoryTask {
 	 * Tasks must return {@code true} on {@code null} input.
 	 */
 	@Test
-	public void tasksAreInNullState() {
+	void tasksAreInNullState() {
 		cut.setState(TaskState.CURRENT);
 		assertTrue(cut.isInState(null));
 	}
@@ -57,7 +57,7 @@ public class TestDirectoryTask {
 	 * Tasks must return {@code true} on {@code null} input.
 	 */
 	@Test
-	public void everyStateIfNoChildren() {
+	void everyStateIfNoChildren() {
 		assertTrue(cut.isInState(TaskState.CURRENT));
 		assertTrue(cut.isInState(TaskState.SCHEDULE));
 		assertTrue(cut.isInState(TaskState.DONE));
@@ -68,7 +68,7 @@ public class TestDirectoryTask {
 	 * Directory task returns own state after asking children.
 	 */
 	@Test
-	public void ownStateAfterChildState() {
+	void ownStateAfterChildState() {
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		ems.replayAll();
@@ -83,7 +83,7 @@ public class TestDirectoryTask {
 	 * Directory task uses child state.
 	 */
 	@Test
-	public void childStateBeforeOwnState() {
+	void childStateBeforeOwnState() {
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(true);
 		ems.replayAll();
@@ -98,7 +98,7 @@ public class TestDirectoryTask {
 	 * Directory task returns own state after asking children.
 	 */
 	@Test
-	public void falseAsFallbackState() {
+	void falseAsFallbackState() {
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		expect(taskMock.isInState(TaskState.CURRENT)).andReturn(false);
 		ems.replayAll();

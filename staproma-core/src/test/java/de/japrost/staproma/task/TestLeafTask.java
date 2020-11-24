@@ -1,25 +1,26 @@
 package de.japrost.staproma.task;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the {@link LeafTask}.
- * 
+ *
  * @author alexxismachine (Ulrich David)
- * 
  */
-public class TestLeafTask {
+class TestLeafTask {
+
 	private LeafTask cut;
 	private Task parentTask;
 
 	/**
 	 * Set up each test.
 	 */
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		cut = new LeafTask(parentTask, "The leaf task.");
 	}
 
@@ -27,7 +28,7 @@ public class TestLeafTask {
 	 * Test if the constructor values get assigned.
 	 */
 	@Test
-	public void getConstructorAssignments() {
+	void getConstructorAssignments() {
 		assertEquals("The leaf task.", cut.getDescription());
 		assertEquals(parentTask, cut.getParent());
 	}
@@ -35,8 +36,11 @@ public class TestLeafTask {
 	/**
 	 * a leaf taks must no have children.
 	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void noChildsAssignable() {
-		cut.addChild(new AnonymousTask(cut));
+	@Test
+	void noChildsAssignable() {
+		assertThrows(
+				IllegalArgumentException.class,
+				() -> cut.addChild(new AnonymousTask(cut)),
+				"Expected addChild() to throw, but it didn't");
 	}
 }

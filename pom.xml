@@ -21,6 +21,7 @@
     <!-- version override from parent -->
     <version.override.asciidoctor-maven-plugin>1.5.6</version.override.asciidoctor-maven-plugin>
     <version.override.maven-assembly-plugin>3.1.1</version.override.maven-assembly-plugin>
+    <version.override.maven-surefire-plugin>3.0.0-M5</version.override.maven-surefire-plugin>
   </properties>
 
   <modules>
@@ -67,6 +68,15 @@
         <version>${version.override.maven-assembly-plugin}</version>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${version.override.maven-surefire-plugin}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <distributionManagement>

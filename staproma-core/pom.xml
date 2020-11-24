@@ -13,6 +13,10 @@
   <description>Core Modules of staproma</description>
   <url>http://www.japrost.de/java/staproma/staproma-core/</url>
 
+  <properties>
+    <version.junit>5.7.0</version.junit>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -30,13 +34,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.jplanets.junit</groupId>
-      <artifactId>jplanets-junit-utils</artifactId>
-      <version>1.0</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
