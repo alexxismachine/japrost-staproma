@@ -14,21 +14,20 @@ import de.japrost.staproma.task.Task;
 /**
  * Renderer which tries to render tasks by date.
  */
-public class ScheduledTaskHtmlRenderer {
+public class ScheduledTaskHtmlRenderer implements Renderer {
+
 	private final Task rootTask;
 	private final Writer writer;
 	private List<LeafTask> leafs;
 
 	/**
 	 * Create an initialized instance.
-	 * 
-	 * @param rootTask
-	 *            the task to render.
-	 * @param writer
-	 *            the writer to render to.
+	 *
+	 * @param rootTask the task to render.
+	 * @param writer the writer to render to.
 	 */
-	public ScheduledTaskHtmlRenderer(Task rootTask, Writer writer) {
-		if (rootTask == null | writer == null) {
+	public ScheduledTaskHtmlRenderer(final Task rootTask, final Writer writer) {
+		if ((rootTask == null) | (writer == null)) {
 			throw new IllegalArgumentException("Task (" + rootTask + ") or Writer (" + writer + ") must not be null");
 		}
 		this.rootTask = rootTask;
@@ -38,10 +37,10 @@ public class ScheduledTaskHtmlRenderer {
 
 	/**
 	 * Render the tasks to the writer.
-	 * 
-	 * @throws IOException
-	 *             on io failures on the writer.
+	 *
+	 * @throws IOException on io failures on the writer.
 	 */
+	@Override
 	public void render() throws IOException {
 		writer.write("<dl>\n");
 		if (rootTask instanceof LeafTask) {
@@ -51,7 +50,7 @@ public class ScheduledTaskHtmlRenderer {
 			leafs.sort(new Comparator<LeafTask>() {
 
 				@Override
-				public int compare(LeafTask o1, LeafTask o2) {
+				public int compare(final LeafTask o1, final LeafTask o2) {
 					return o1.getDescription().compareTo(o2.getDescription());
 				}
 			});
@@ -60,7 +59,7 @@ public class ScheduledTaskHtmlRenderer {
 		writer.write("</dl>\n");
 	}
 
-	private void collectFromTree(Task treeRoot) throws IOException {
+	private void collectFromTree(final Task treeRoot) throws IOException {
 		for (Task subTask : treeRoot) {
 			if (subTask.isInState(TaskState.SCHEDULE)) {
 				if (subTask instanceof LeafTask) {
@@ -78,7 +77,7 @@ public class ScheduledTaskHtmlRenderer {
 		}
 	}
 
-	private void render(LeafTask leafTask) throws IOException {
+	private void render(final LeafTask leafTask) throws IOException {
 		String parentString = composeParentPath(leafTask);
 		String[] split = leafTask.getDescription().split(" ", 2);
 		writer.write("  <dt>" + split[0] + "</dt>\n");
@@ -86,10 +85,10 @@ public class ScheduledTaskHtmlRenderer {
 		writer.write("\n");
 	}
 
-	private String composeParentPath(Task leafTask) {
+	private String composeParentPath(final Task leafTask) {
 		Task parent = leafTask.getParent();
 		String parentString = "";
-		if (parent != null && parent.getParent() != null) {
+		if ((parent != null) && (parent.getParent() != null)) {
 			// FIXME create links to directory tasks.
 			if (parent instanceof DirectoryTask) {
 				parentString = " : <a href='" + ((DirectoryTask) parent).getPath() + "'>" + parent.getDescription() + "</a>";

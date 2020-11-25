@@ -15,7 +15,7 @@ import de.japrost.staproma.task.Task;
  *
  * @author alexxismachine (Ulrich David)
  */
-public class StatusTaskHtmlRenderer {
+public class StatusTaskHtmlRenderer implements Renderer {
 
 	private final Task root;
 	private final Writer writer;
@@ -35,6 +35,7 @@ public class StatusTaskHtmlRenderer {
 	 * @param writer the writer to render to. MUST NOT be {@code null}.
 	 * @throws IOException on io failures on the writer.
 	 */
+	@Override
 	public void render() throws IOException {
 		//TODO writer and status as instance variables
 		walkSubTree(root, 0, new RenderState(), writer);
@@ -47,7 +48,11 @@ public class StatusTaskHtmlRenderer {
 		if (task.isInState(taskState)) {
 			if (level > 0) {
 				// do not print root task
-				printTask(task, level, renderState, writer);
+				if (task instanceof LeafTask) {
+					printLeafTask(task, level, renderState, writer);
+				} else {
+					printOtherTask(task, level, renderState, writer);
+				}
 			}
 			RenderState localRenderState = new RenderState();
 			for (Task subTask : task) {
@@ -56,6 +61,50 @@ public class StatusTaskHtmlRenderer {
 			if (localRenderState.openul) {
 				writer.append("</ul>\n");
 			}
+		}
+	}
+
+	private void printLeafTask(final Task task, final int level, final RenderState renderState, final Writer writer)
+			throws IOException {
+		if (!renderState.openul) {
+			renderState.openul = true;
+			if (renderState.inBlock) {
+				writer.append("<h" + level + ">" + "WEITERES" + "</h" + level + ">\n");
+			}
+			writer.append("<ul>\n");
+		}
+		if (task.getPriority() > 0) {
+			writer.append("  <li class='priority" + task.getPriority() + "'>" + task.getDescription() + "</li>\n");
+		} else {
+			writer.append("  <li>" + task.getDescription() + "</li>\n");
+		}
+	}
+
+	private void printOtherTask(final Task task, final int level, final RenderState renderState, final Writer writer)
+			throws IOException {
+		if (renderState.openul) {
+			writer.append("</ul>\n");
+			renderState.openul = false;
+		}
+		renderState.inBlock = true;
+		List<Short> priorities = task.priorities();
+		System.out.println("##########" + priorities);
+		String prioClasses;
+		if (priorities.isEmpty()) {
+			prioClasses = "";
+		} else {
+			prioClasses = priorities.stream().filter(s -> s.shortValue() != 0)
+					.map(s -> "priority" + s.toString())
+					.collect(Collectors.joining(" ", " class='", "'"));
+		}
+		if (task instanceof DirectoryTask) {
+			writer.append("<h" + level + prioClasses + ">");
+			writer.append("<a href='" + ((DirectoryTask) task).getPath() + "'>");
+			writer.append(task.getDescription());
+			writer.append("</a>");
+			writer.append("</h" + level + ">\n");
+		} else {
+			writer.append("<h" + level + prioClasses + ">" + task.getDescription() + "</h" + level + ">\n");
 		}
 	}
 

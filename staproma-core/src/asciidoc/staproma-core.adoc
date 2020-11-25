@@ -5,6 +5,7 @@
 Main class...
 
 Uses old different file filters as well as new spm filter.
+All filters are case sensitive and return only files.
 
 include::../../src/main/java/de/japrost/staproma/FileFilters.java[tags=filters]
 

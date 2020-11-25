@@ -22,7 +22,8 @@ class TestRenderStaProMa2 {
 		File outDir = new File("target/", "renderDir");
 		outDir.mkdirs();
 		RenderStaProMa2
-				.main(new String[] { new File("src/test/resources", "renderDir").getAbsolutePath(), outDir.getAbsolutePath() });
+				.main(new String[] { new File("src/test/resources", "renderDir").getAbsolutePath(), outDir.getAbsolutePath(),
+						new File("src/test/resources", "templates").getAbsolutePath() });
 		//FIXME assert file contents?
 	}
 
@@ -36,7 +37,7 @@ class TestRenderStaProMa2 {
 		File outDir = new File("target/", "mixContent");
 		outDir.mkdirs();
 		RenderStaProMa2.main(new String[] { new File("src/test/resources", "mixFlatAndDirectoryTasks").getAbsolutePath(),
-				outDir.getAbsolutePath() });
+				outDir.getAbsolutePath(), new File("src/test/resources", "templates").getAbsolutePath() });
 		//FIXME assert file contents?
 	}
 }
