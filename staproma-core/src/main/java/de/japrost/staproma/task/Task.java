@@ -10,15 +10,17 @@ import de.japrost.staproma.TaskState;
  * A task in the task tree.
  * </p>
  * <p>
- * A task consists mainly of two parts: the description and the content. In addition to this,for the task tree, the task
- * can have a parent task and child tasks. A task implements {@link Iterable} on its children.
+ * A task consists mainly of two parts: the description and the content. In
+ * addition to this,for the task tree, the task can have a parent task and child
+ * tasks. A task implements {@link Iterable} on its children.
  * </p>
  * <p>
- * A task has no concrete state since for a task with children the task itself is supposed to be in all the states of
- * the children.
+ * A task has no concrete state since for a task with children the task itself
+ * is supposed to be in all the states of the children.
  * </p>
  * <p>
- * The content of the task is just a bunch of Strings that can be collected and returned.
+ * The content of the task is just a bunch of Strings that can be collected and
+ * returned.
  * </p>
  *
  * @author alexxismachine (Ulrich David)
@@ -29,8 +31,9 @@ import de.japrost.staproma.TaskState;
 public interface Task extends Iterable<Task> {
 
 	/**
-	 * Tell if the task is in the asked status. A task is in a status if itself or one of the children is in that status.
-	 * If given status is {@code null} must return <code>true</code>.
+	 * Tell if the task is in the asked status. A task is in a status if itself or
+	 * one of the children is in that status. If given status is {@code null} must
+	 * return <code>true</code>.
 	 *
 	 * @param status the task state
 	 * @return <code>true</code> if the task is in the asked status.
@@ -59,6 +62,11 @@ public interface Task extends Iterable<Task> {
 	boolean hasChildren();
 
 	/**
+	 * Tell if this Task is a task or a container.
+	 */
+	boolean isContainer();
+
+	/**
 	 * Get the praent task.
 	 *
 	 * @return the parent task. <code>null</code> if there is no parent.
@@ -75,7 +83,8 @@ public interface Task extends Iterable<Task> {
 	/**
 	 * Get the content collection.
 	 *
-	 * @return the content collection. MUST NOT be <code>null</code>. MAY be an unmodifiable collection.
+	 * @return the content collection. MUST NOT be <code>null</code>. MAY be an
+	 *         unmodifiable collection.
 	 */
 	Collection<String> getContent();
 
@@ -93,8 +102,7 @@ public interface Task extends Iterable<Task> {
 	 */
 	List<Short> priorities();
 	/*
-	 * FIXME implement correct rendering
-	 * /** Render this task into given writer
+	 * FIXME implement correct rendering /** Render this task into given writer
 	 * using its own representation.
 	 *
 	 * @param writer the writer to write to.

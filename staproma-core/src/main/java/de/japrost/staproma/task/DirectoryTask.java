@@ -9,7 +9,7 @@ import de.japrost.staproma.TaskState;
  * @author alexxismachine (Ulrich David)
  * 
  */
-public class DirectoryTask extends AbstactTask {
+public class DirectoryTask extends AbstractContainerTask {
 	private final String path;
 
 	/**

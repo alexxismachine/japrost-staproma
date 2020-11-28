@@ -79,6 +79,8 @@ public class RenderStaProMa2 {
 	 * @throws IOException on io problems
 	 */
 	public static void main(final String[] args) throws IOException {
+		System.err.println("MAIN ");
+		System.out.println("MAIN out");
 		final IOFileFilter allFilter = setupFilters();
 		final IoDirs dirs = setupIoDirs(args);
 		final RenderStaProMa2 current = new RenderStaProMa2(dirs, allFilter);

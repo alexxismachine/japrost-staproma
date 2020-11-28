@@ -43,41 +43,55 @@
 </#list>		
 <#-- END: priority switches -->
 <#-- START: contents -->
-<#macro printLeafTask task level openUl inBlock>
+<#macro printLeafTask task level>
   <#-- <p>printLeafTask ${task} ${level} ${openUl?c} ${inBlock?c} : ${task.description}</p>-->
   <li class='priority${task.priority}'>${task.description}</li>
 </#macro>
 
-<#macro printOtherTask task level openUl inBlock>
-  <#-- <p>printOtherTask ${task} ${level} ${openUl?c} ${inBlock?c} : ${task.description}</p>-->
+<#macro printContainerTask task level>
+  <#-- <p>printContainerTask ${task} ${level} : ${task.description}</p>-->
   <#assign prioClasses><#list task.priorities() as prio>priority${prio} </#list></#assign>
   <h${level} class='${prioClasses}'>${task.description}</h${level}>
 </#macro>
 
-<#macro walkSubTree task level openUl inBlock>
-  <#-- <p>walkSubTree ${task} ${level} ${openUl?c} ${inBlock?c} : ${task.description}</p>-->
+<#macro processChildren task level>
+  <#assign inUl = false>
+  <#list task.iterator() as subTask>
+    <#if !subTask.isContainer()>
+      <#if !inUl>
+        <ul>
+        <#assign inUl = true>
+      </#if>
+      <@printLeafTask task=task level=level/>
+      <#continue>
+    </#if>
+    <#if inUl>
+      </ul>
+      <#assign inUl = false>
+    </#if>
+    <@walkSubTree task=subTask level=(level+1)/>
+  </#list>
+    <#if inUl>
+      </ul>
+      <#assign inUl = false>
+    </#if>
+</#macro>
+
+<#macro walkSubTree task level>
+  <#-- <p>walkSubTree ${task} ${level} : ${task.description}</p>-->
   <#if !task.isInState(taskStateFileName.taskState())>
     <#return>
   </#if>
   <#if (level > 0)>
-    <#if task.hasChildren()>
-      <@printOtherTask task=task level=level openUl=openUl inBlock=inBlock/>
-      <ul>
-      <#list task.iterator() as subTask>
-        <@walkSubTree task=subTask level=(level+1) openUl=false inBlock=false/>
-      </#list>
-      </ul>
-    <#else>
-      <@printLeafTask task=task level=level openUl=openUl inBlock=inBlock/>
-    </#if>
-  <#else>
-    <#list task.iterator() as subTask>
-      <@walkSubTree task=subTask level=(level+1) openUl=false inBlock=false/>
-    </#list>
+    <@printContainerTask task=task level=level/>
+    <@processChildren task=task level=level/>
+  <#else><#-- walk subtree of root taskt -->
+    <@processChildren task=task level=level/>
   </#if>
 </#macro>
-<#assign level = 0>
-<@walkSubTree task=tasks level=0 openUl=false inBlock=false/>
+
+
+<@walkSubTree task=tasks level=0/>
 <#-- END: contents -->
 </form>
 <#-- START: footer -->

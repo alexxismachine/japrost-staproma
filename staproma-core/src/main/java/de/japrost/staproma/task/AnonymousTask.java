@@ -13,7 +13,7 @@ package de.japrost.staproma.task;
  * @author alexxismachine (Ulrich David)
  * 
  */
-public class AnonymousTask extends AbstactTask {
+public class AnonymousTask extends AbstractContainerTask {
 	/**
 	 * The task description of the {@link AnonymousTask}.
 	 */

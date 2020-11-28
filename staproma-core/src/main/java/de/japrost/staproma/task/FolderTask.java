@@ -6,7 +6,7 @@ package de.japrost.staproma.task;
  * @author alexxismachine (Ulrich David)
  * 
  */
-public class FolderTask extends AbstactTask {
+public class FolderTask extends AbstractContainerTask {
 	/**
 	 * Create an instance with the given parameters.
 	 * 

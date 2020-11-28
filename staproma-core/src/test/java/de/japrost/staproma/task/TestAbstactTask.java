@@ -37,6 +37,11 @@ class TestAbstactTask {
 		ems = new EasyMockSupport();
 		parentTask = new AnonymousTask(null);
 		cut = new AbstactTask(parentTask, "The root task") {
+
+			@Override
+			public boolean isContainer() {
+				return false;
+			}
 		};
 		taskMock = ems.createMock(Task.class);
 	}

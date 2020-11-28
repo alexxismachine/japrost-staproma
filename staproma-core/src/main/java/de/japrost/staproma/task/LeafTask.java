@@ -48,4 +48,9 @@ public class LeafTask extends AbstactTask {
 		//		}
 	}
 	 */
+
+	@Override
+	public boolean isContainer() {
+		return false;
+	}
 }

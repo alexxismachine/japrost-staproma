@@ -55,7 +55,9 @@ public class FileWriter {
 	}
 
 	private void writeFile(final String fileName, final String content) throws IOException {
-		FileUtils.write(new File(outDir, fileName), content);
+		File file = new File(outDir, fileName);
+		System.err.println("Writing " +file.getAbsolutePath());
+		FileUtils.write(file, content);
 	}
 
 	private void includeStyle(final StringWriter writer) {
