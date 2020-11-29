@@ -57,12 +57,15 @@
 <#macro processChildren task level>
   <#assign inUl = false>
   <#list task.iterator() as subTask>
+    <#if !subTask.isInState(taskStateFileName.taskState())>
+      <#continue>
+    </#if>
     <#if !subTask.isContainer()>
       <#if !inUl>
         <ul>
         <#assign inUl = true>
       </#if>
-      <@printLeafTask task=task level=level/>
+      <@printLeafTask task=subTask level=level/>
       <#continue>
     </#if>
     <#if inUl>

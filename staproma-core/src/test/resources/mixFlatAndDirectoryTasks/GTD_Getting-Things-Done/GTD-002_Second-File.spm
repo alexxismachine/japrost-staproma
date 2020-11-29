@@ -1,3 +1,6 @@
 ' Just a task file without dir
 ' (!) Current (:) Waiting (@) Scheduled (#) Future (?) Someday (/) Done
 * (!) Do the needful (GTD-002.spm)
+* (@) 2020-01-01 Do it now (GTD-002.spm)
+# level up
+* (@) 2020-02-01 Scheduled in level (GTD-002.spm)

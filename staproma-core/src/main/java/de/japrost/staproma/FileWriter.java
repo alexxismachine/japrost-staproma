@@ -36,13 +36,14 @@ public class FileWriter {
 		writeFile(taskStateFileName.fileName(), writer.toString());
 
 		StringWriter writer2 = new NewLineStringWriter();
-		FreemarkerRenderer freemarkerRenderer = new FreemarkerRenderer(writer2);
+		FreemarkerRenderer freemarkerRenderer = new FreemarkerRenderer(writer2, "baseGtd.ftlh");
 		freemarkerRenderer.render(templateDir, root, title, taskStateFileName);
 		writeFile("ftl-" + taskStateFileName.fileName(), writer2.toString());
 
 	}
 
-	void writeScheduleFile(final Task root, final String title, final TaskStateFileName fileName) throws IOException {
+	void writeScheduleFile(final Task root, final String title, final TaskStateFileName taskStateFileName)
+			throws IOException {
 		StringWriter writer = new NewLineStringWriter();
 		BaseRenderer br = new BaseRenderer();
 		br.writeHead(writer, title);
@@ -51,12 +52,17 @@ public class FileWriter {
 		renderer.render();
 
 		br.writeFoot(writer);
-		writeFile(fileName.fileName(), writer.toString());
+		writeFile(taskStateFileName.fileName(), writer.toString());
+
+		StringWriter writer2 = new NewLineStringWriter();
+		FreemarkerRenderer freemarkerRenderer = new FreemarkerRenderer(writer2, "baseSchedule.ftlh");
+		freemarkerRenderer.render(templateDir, root, title, taskStateFileName);
+		writeFile("ftl-" + taskStateFileName.fileName(), writer2.toString());
 	}
 
 	private void writeFile(final String fileName, final String content) throws IOException {
 		File file = new File(outDir, fileName);
-		System.err.println("Writing " +file.getAbsolutePath());
+		System.err.println("Writing " + file.getAbsolutePath());
 		FileUtils.write(file, content);
 	}
 
