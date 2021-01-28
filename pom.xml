@@ -9,12 +9,12 @@
 
   <groupId>de.japrost.staproma</groupId>
   <artifactId>staproma</artifactId>
-  <version>0.4.0-SNAPSHOT</version>
+  <version>0.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Static Project Management</name>
   <description>Manage your work with simple text files</description>
-  <url>http://www.japrost.de/java/staproma/</url>
+  <url>https://www.japrost.de/java/staproma/</url>
 
   <properties>
     <japrost.site.locales>de</japrost.site.locales>

@@ -7,14 +7,14 @@
   <parent>
     <groupId>de.japrost.staproma</groupId>
     <artifactId>staproma</artifactId>
-    <version>0.4.0-SNAPSHOT</version>
+    <version>0.5.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>staproma-core</artifactId>
 
   <name>Static Project Management Core</name>
   <description>Core Modules of staproma</description>
-  <url>http://www.japrost.de/java/staproma/staproma-core/</url>
+  <url>https://www.japrost.de/java/staproma/staproma-core/</url>
 
   <properties>
     <version.junit>5.7.0</version.junit>

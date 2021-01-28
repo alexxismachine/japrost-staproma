@@ -53,6 +53,7 @@ public class RenderStaProMa2 {
 	 *
 	 * @param startDir The base dir to read from.
 	 * @param outDir The base dir to write to.
+	 * @param templateDir The base dir to look for templates.
 	 * @param fileFilter filter which files to use.
 	 */
 	public RenderStaProMa2(final File startDir, final File outDir, final File templateDir,
