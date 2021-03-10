@@ -36,7 +36,8 @@ public class FileWriter {
 		writeFile(taskStateFileName.fileName(), writer.toString());
 
 		StringWriter writer2 = new NewLineStringWriter();
-		FreemarkerRenderer freemarkerRenderer = new FreemarkerRenderer(writer2, "baseGtd.ftlh");
+		FreemarkerRenderer freemarkerRenderer = new FreemarkerRenderer(writer2,
+				taskStateFileName.taskState() + "_Gtd.ftlh");
 		freemarkerRenderer.render(templateDir, root, title, taskStateFileName);
 		writeFile("ftl-" + taskStateFileName.fileName(), writer2.toString());
 
@@ -55,7 +56,8 @@ public class FileWriter {
 		writeFile(taskStateFileName.fileName(), writer.toString());
 
 		StringWriter writer2 = new NewLineStringWriter();
-		FreemarkerRenderer freemarkerRenderer = new FreemarkerRenderer(writer2, "baseSchedule.ftlh");
+		FreemarkerRenderer freemarkerRenderer = new FreemarkerRenderer(writer2,
+				taskStateFileName.taskState() + "_Gtd.ftlh");
 		freemarkerRenderer.render(templateDir, root, title, taskStateFileName);
 		writeFile("ftl-" + taskStateFileName.fileName(), writer2.toString());
 	}
